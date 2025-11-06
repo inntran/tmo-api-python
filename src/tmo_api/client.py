@@ -18,7 +18,7 @@ from .resources import (
 )
 
 
-class TheMortgageOfficeClient:
+class TMOClient:
     """Base client for The Mortgage Office API."""
 
     def __init__(

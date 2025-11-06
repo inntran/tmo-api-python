@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from tmo_api.client import TheMortgageOfficeClient
+from tmo_api.client import TMOClient
 from tmo_api.exceptions import ValidationError
 from tmo_api.resources.partners import PartnersResource
 from tmo_api.resources.pools import PoolType
@@ -16,7 +16,7 @@ class TestPartnersResource:
     @pytest.fixture
     def client(self, mock_token, mock_database):
         """Create a test client."""
-        return TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        return TMOClient(token=mock_token, database=mock_database)
 
     def test_partners_resource_init_shares(self, client):
         """Test PartnersResource initialization with Shares type."""
@@ -31,7 +31,7 @@ class TestPartnersResource:
         assert resource.pool_type == PoolType.CAPITAL
         assert resource.base_path == "LSS.svc/Capital"
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_partner_success(self, mock_get, client, mock_api_response_success):
         """Test successful get_partner call."""
         mock_get.return_value = mock_api_response_success
@@ -42,7 +42,7 @@ class TestPartnersResource:
         mock_get.assert_called_once_with("LSS.svc/Shares/Partners/PARTNER001")
         assert partner is not None
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_partner_empty_account(self, mock_get, client):
         """Test get_partner with empty account raises ValidationError."""
         resource = PartnersResource(client, PoolType.SHARES)
@@ -53,7 +53,7 @@ class TestPartnersResource:
         assert "Account parameter is required" in str(exc_info.value)
         mock_get.assert_not_called()
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_partner_attachments(self, mock_get, client):
         """Test get_partner_attachments."""
         mock_get.return_value = {"Status": 0, "Data": [{"attachment_id": 1}]}
@@ -64,7 +64,7 @@ class TestPartnersResource:
         mock_get.assert_called_once_with("LSS.svc/Shares/Partners/PARTNER001/Attachments")
         assert isinstance(attachments, list)
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_partner_attachments_empty_account(self, mock_get, client):
         """Test get_partner_attachments with empty account raises ValidationError."""
         resource = PartnersResource(client, PoolType.SHARES)
@@ -75,7 +75,7 @@ class TestPartnersResource:
         assert "Account parameter is required" in str(exc_info.value)
         mock_get.assert_not_called()
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_list_all_no_filters(self, mock_get, client):
         """Test list_all without filters."""
         mock_get.return_value = {"Status": 0, "Data": [{"partner_id": 1}]}
@@ -86,7 +86,7 @@ class TestPartnersResource:
         mock_get.assert_called_once_with("LSS.svc/Shares/Partners", params=None)
         assert isinstance(partners, list)
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_list_all_with_date_filters(self, mock_get, client):
         """Test list_all with date filters."""
         mock_get.return_value = {"Status": 0, "Data": [{"partner_id": 1}]}
@@ -100,7 +100,7 @@ class TestPartnersResource:
         )
         assert isinstance(partners, list)
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_list_all_invalid_start_date(self, mock_get, client):
         """Test list_all with invalid start_date format."""
         resource = PartnersResource(client, PoolType.SHARES)
@@ -111,7 +111,7 @@ class TestPartnersResource:
         assert "start_date must be in MM/DD/YYYY format" in str(exc_info.value)
         mock_get.assert_not_called()
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_list_all_invalid_end_date(self, mock_get, client):
         """Test list_all with invalid end_date format."""
         resource = PartnersResource(client, PoolType.SHARES)

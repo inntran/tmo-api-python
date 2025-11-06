@@ -5,14 +5,14 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, cast
 from .pools import PoolType
 
 if TYPE_CHECKING:
-    from ..client import TheMortgageOfficeClient
+    from ..client import TMOClient
 
 
 class CertificatesResource:
     """Resource for managing share certificates."""
 
     def __init__(
-        self, client: "TheMortgageOfficeClient", pool_type: PoolType = PoolType.SHARES
+        self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES
     ) -> None:
         """Initialize the certificates resource.
 

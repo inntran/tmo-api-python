@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, List, cast
 from ..models.pool import Pool, PoolResponse, PoolsResponse
 
 if TYPE_CHECKING:
-    from ..client import TheMortgageOfficeClient
+    from ..client import TMOClient
 
 
 class PoolType(Enum):
@@ -20,7 +20,7 @@ class PoolsResource:
     """Resource for managing mortgage pools."""
 
     def __init__(
-        self, client: "TheMortgageOfficeClient", pool_type: PoolType = PoolType.SHARES
+        self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES
     ) -> None:
         """Initialize the pools resource.
 
