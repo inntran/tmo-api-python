@@ -6,6 +6,7 @@ import pytest
 
 from tmo_api.client import TheMortgageOfficeClient
 from tmo_api.exceptions import ValidationError
+from tmo_api.models.pool import Pool
 from tmo_api.resources.pools import PoolsResource, PoolType
 
 
@@ -40,6 +41,7 @@ class TestPoolsResource:
 
         mock_get.assert_called_once_with(f"LSS.svc/Shares/Pools/{mock_pool_account}")
         assert pool is not None
+        assert isinstance(pool, Pool)
 
     @patch.object(TheMortgageOfficeClient, "get")
     def test_get_pool_empty_account(self, mock_get, client):
@@ -106,6 +108,7 @@ class TestPoolsResource:
 
         mock_get.assert_called_once_with("LSS.svc/Shares/Pools")
         assert isinstance(pools, list)
+        assert all(isinstance(pool, Pool) for pool in pools)
 
     def test_pool_type_enum(self):
         """Test PoolType enum values."""
