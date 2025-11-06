@@ -92,7 +92,9 @@ class TestClientRequests:
     """Test client HTTP request methods."""
 
     @patch("tmo_api.client.requests.Session.request")
-    def test_get_request_success(self, mock_request, mock_token, mock_database, mock_api_response_success):
+    def test_get_request_success(
+        self, mock_request, mock_token, mock_database, mock_api_response_success
+    ):
         """Test successful GET request."""
         mock_response = Mock()
         mock_response.json.return_value = mock_api_response_success
@@ -106,7 +108,9 @@ class TestClientRequests:
         mock_request.assert_called_once()
 
     @patch("tmo_api.client.requests.Session.request")
-    def test_post_request_success(self, mock_request, mock_token, mock_database, mock_api_response_success):
+    def test_post_request_success(
+        self, mock_request, mock_token, mock_database, mock_api_response_success
+    ):
         """Test successful POST request."""
         mock_response = Mock()
         mock_response.json.return_value = mock_api_response_success
@@ -119,7 +123,9 @@ class TestClientRequests:
         assert result == mock_api_response_success
 
     @patch("tmo_api.client.requests.Session.request")
-    def test_put_request_success(self, mock_request, mock_token, mock_database, mock_api_response_success):
+    def test_put_request_success(
+        self, mock_request, mock_token, mock_database, mock_api_response_success
+    ):
         """Test successful PUT request."""
         mock_response = Mock()
         mock_response.json.return_value = mock_api_response_success
@@ -132,7 +138,9 @@ class TestClientRequests:
         assert result == mock_api_response_success
 
     @patch("tmo_api.client.requests.Session.request")
-    def test_delete_request_success(self, mock_request, mock_token, mock_database, mock_api_response_success):
+    def test_delete_request_success(
+        self, mock_request, mock_token, mock_database, mock_api_response_success
+    ):
         """Test successful DELETE request."""
         mock_response = Mock()
         mock_response.json.return_value = mock_api_response_success
@@ -149,7 +157,9 @@ class TestClientErrors:
     """Test client error handling."""
 
     @patch("tmo_api.client.requests.Session.request")
-    def test_api_error_response(self, mock_request, mock_token, mock_database, mock_api_response_error):
+    def test_api_error_response(
+        self, mock_request, mock_token, mock_database, mock_api_response_error
+    ):
         """Test handling of API error response."""
         mock_response = Mock()
         mock_response.json.return_value = mock_api_response_error
