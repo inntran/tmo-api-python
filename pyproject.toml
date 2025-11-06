@@ -1,0 +1,37 @@
+[project]
+name = "tmo-api"
+version = "0.0.1"
+description = "Wrapper for The Mortgage Office API"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Yinchuan Song", email = "songyinchuan@gmail.com" }
+]
+requires-python = ">=3.9"
+dependencies = []
+keywords = ["TMO", "The Mortgage Office", "Mortgage Pools", "Mortgage Pool Shares"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+
+[project.urls]
+Repository = https://github.com/inntran/tmo-api-python
+Issues = https://github.com/inntran/tmo-api-python/issues
+
+[build-system]
+requires = ["uv_build>=0.9.5,<0.10.0"]
+build-backend = "uv_build"
