@@ -1,11 +1,12 @@
 """Tests for PoolsResource."""
 
-import pytest
 from unittest.mock import Mock, patch
 
+import pytest
+
 from tmo_api.client import TheMortgageOfficeClient
-from tmo_api.resources.pools import PoolsResource, PoolType
 from tmo_api.exceptions import ValidationError
+from tmo_api.resources.pools import PoolsResource, PoolType
 
 
 class TestPoolsResource:

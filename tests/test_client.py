@@ -1,7 +1,8 @@
 """Tests for TheMortgageOfficeClient."""
 
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 import requests
 
 from tmo_api.client import TheMortgageOfficeClient
