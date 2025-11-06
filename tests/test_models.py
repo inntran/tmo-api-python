@@ -1,7 +1,8 @@
 """Tests for data models."""
 
-import pytest
 from datetime import datetime
+
+import pytest
 
 from tmo_api.models import BaseModel, BaseResponse
 
