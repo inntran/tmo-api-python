@@ -19,9 +19,7 @@ class PoolType(Enum):
 class PoolsResource:
     """Resource for managing mortgage pools."""
 
-    def __init__(
-        self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES
-    ) -> None:
+    def __init__(self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES) -> None:
         """Initialize the pools resource.
 
         Args:

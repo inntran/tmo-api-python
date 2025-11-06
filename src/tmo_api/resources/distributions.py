@@ -11,9 +11,7 @@ if TYPE_CHECKING:
 class DistributionsResource:
     """Resource for managing pool distributions."""
 
-    def __init__(
-        self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES
-    ) -> None:
+    def __init__(self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES) -> None:
         """Initialize the distributions resource.
 
         Args:

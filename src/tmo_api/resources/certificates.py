@@ -11,9 +11,7 @@ if TYPE_CHECKING:
 class CertificatesResource:
     """Resource for managing share certificates."""
 
-    def __init__(
-        self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES
-    ) -> None:
+    def __init__(self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES) -> None:
         """Initialize the certificates resource.
 
         Args:
