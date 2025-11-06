@@ -1,11 +1,11 @@
-"""Tests for TheMortgageOfficeClient."""
+"""Tests for TMOClient."""
 
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 import requests
 
-from tmo_api.client import TheMortgageOfficeClient
+from tmo_api.client import TMOClient
 from tmo_api.environments import Environment
 from tmo_api.exceptions import (
     APIError,
@@ -19,7 +19,7 @@ class TestClientInitialization:
 
     def test_client_init_with_defaults(self, mock_token, mock_database):
         """Test client initialization with default values."""
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
         assert client.token == mock_token
         assert client.database == mock_database
         assert client.base_url == Environment.US.value
@@ -28,7 +28,7 @@ class TestClientInitialization:
 
     def test_client_init_with_environment_enum(self, mock_token, mock_database):
         """Test client initialization with environment enum."""
-        client = TheMortgageOfficeClient(
+        client = TMOClient(
             token=mock_token,
             database=mock_database,
             environment=Environment.CANADA,
@@ -38,7 +38,7 @@ class TestClientInitialization:
     def test_client_init_with_custom_url(self, mock_token, mock_database):
         """Test client initialization with custom URL string."""
         custom_url = "https://custom-api.example.com"
-        client = TheMortgageOfficeClient(
+        client = TMOClient(
             token=mock_token,
             database=mock_database,
             environment=custom_url,
@@ -47,7 +47,7 @@ class TestClientInitialization:
 
     def test_client_init_with_custom_timeout(self, mock_token, mock_database):
         """Test client initialization with custom timeout."""
-        client = TheMortgageOfficeClient(
+        client = TMOClient(
             token=mock_token,
             database=mock_database,
             timeout=60,
@@ -56,7 +56,7 @@ class TestClientInitialization:
 
     def test_client_init_with_debug(self, mock_token, mock_database):
         """Test client initialization with debug mode."""
-        client = TheMortgageOfficeClient(
+        client = TMOClient(
             token=mock_token,
             database=mock_database,
             debug=True,
@@ -65,7 +65,7 @@ class TestClientInitialization:
 
     def test_client_session_headers(self, mock_token, mock_database):
         """Test session headers are set correctly."""
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
         assert client.session.headers["Token"] == mock_token
         assert client.session.headers["Database"] == mock_database
         assert client.session.headers["Content-Type"] == "application/json"
@@ -73,7 +73,7 @@ class TestClientInitialization:
 
     def test_client_resources_initialized(self, mock_token, mock_database):
         """Test that all resource objects are initialized."""
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
 
         # Shares resources
         assert hasattr(client, "shares_pools")
@@ -102,7 +102,7 @@ class TestClientRequests:
         mock_response.status_code = 200
         mock_request.return_value = mock_response
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
         result = client.get("test/endpoint")
 
         assert result == mock_api_response_success
@@ -118,7 +118,7 @@ class TestClientRequests:
         mock_response.status_code = 200
         mock_request.return_value = mock_response
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
         result = client.post("test/endpoint", json={"key": "value"})
 
         assert result == mock_api_response_success
@@ -133,7 +133,7 @@ class TestClientRequests:
         mock_response.status_code = 200
         mock_request.return_value = mock_response
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
         result = client.put("test/endpoint", json={"key": "value"})
 
         assert result == mock_api_response_success
@@ -148,7 +148,7 @@ class TestClientRequests:
         mock_response.status_code = 200
         mock_request.return_value = mock_response
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
         result = client.delete("test/endpoint")
 
         assert result == mock_api_response_success
@@ -167,7 +167,7 @@ class TestClientErrors:
         mock_response.status_code = 200
         mock_request.return_value = mock_response
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
 
         with pytest.raises(APIError) as exc_info:
             client.get("test/endpoint")
@@ -183,7 +183,7 @@ class TestClientErrors:
         mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError()
         mock_request.return_value = mock_response
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
 
         with pytest.raises(AuthenticationError) as exc_info:
             client.get("test/endpoint")
@@ -198,7 +198,7 @@ class TestClientErrors:
         mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError()
         mock_request.return_value = mock_response
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
 
         with pytest.raises(AuthenticationError) as exc_info:
             client.get("test/endpoint")
@@ -210,7 +210,7 @@ class TestClientErrors:
         """Test handling of timeout error."""
         mock_request.side_effect = requests.exceptions.Timeout()
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
 
         with pytest.raises(NetworkError) as exc_info:
             client.get("test/endpoint")
@@ -222,7 +222,7 @@ class TestClientErrors:
         """Test handling of connection error."""
         mock_request.side_effect = requests.exceptions.ConnectionError()
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
 
         with pytest.raises(NetworkError) as exc_info:
             client.get("test/endpoint")
@@ -237,7 +237,7 @@ class TestClientErrors:
         mock_response.status_code = 200
         mock_request.return_value = mock_response
 
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        client = TMOClient(token=mock_token, database=mock_database)
 
         with pytest.raises(APIError) as exc_info:
             client.get("test/endpoint")
@@ -250,7 +250,7 @@ class TestClientDebug:
 
     def test_debug_log_disabled(self, mock_token, mock_database, capsys):
         """Test debug logging is disabled by default."""
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database, debug=False)
+        client = TMOClient(token=mock_token, database=mock_database, debug=False)
         client._debug_log("Test message")
 
         captured = capsys.readouterr()
@@ -258,7 +258,7 @@ class TestClientDebug:
 
     def test_debug_log_enabled(self, mock_token, mock_database, capsys):
         """Test debug logging when enabled."""
-        client = TheMortgageOfficeClient(token=mock_token, database=mock_database, debug=True)
+        client = TMOClient(token=mock_token, database=mock_database, debug=True)
         client._debug_log("Test message")
 
         captured = capsys.readouterr()

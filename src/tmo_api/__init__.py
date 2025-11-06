@@ -1,12 +1,12 @@
 """The Mortgage Office API SDK for Python."""
 
-from .client import TheMortgageOfficeClient
+from .client import TMOClient
 from .environments import DEFAULT_ENVIRONMENT, Environment
 from .exceptions import (
     APIError,
     AuthenticationError,
     NetworkError,
-    TheMortgageOfficeError,
+    TMOException,
     ValidationError,
 )
 from .models import BaseModel, BaseResponse
@@ -22,10 +22,10 @@ from .resources import (
 __version__ = "0.0.1"
 
 __all__ = [
-    "TheMortgageOfficeClient",
+    "TMOClient",
     "Environment",
     "DEFAULT_ENVIRONMENT",
-    "TheMortgageOfficeError",
+    "TMOException",
     "APIError",
     "AuthenticationError",
     "NetworkError",

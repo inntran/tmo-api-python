@@ -3,7 +3,7 @@
 from typing import Optional
 
 
-class TheMortgageOfficeError(Exception):
+class TMOException(Exception):
     """Base exception for The Mortgage Office SDK."""
 
     def __init__(self, message: str, error_number: Optional[int] = None) -> None:
@@ -12,25 +12,25 @@ class TheMortgageOfficeError(Exception):
         self.error_number: Optional[int] = error_number
 
 
-class AuthenticationError(TheMortgageOfficeError):
+class AuthenticationError(TMOException):
     """Raised when authentication fails."""
 
     pass
 
 
-class APIError(TheMortgageOfficeError):
+class APIError(TMOException):
     """Raised when the API returns an error response."""
 
     pass
 
 
-class ValidationError(TheMortgageOfficeError):
+class ValidationError(TMOException):
     """Raised when request validation fails."""
 
     pass
 
 
-class NetworkError(TheMortgageOfficeError):
+class NetworkError(TMOException):
     """Raised when network-related errors occur."""
 
     pass
