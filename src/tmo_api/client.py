@@ -9,7 +9,13 @@ import requests
 
 from .environments import DEFAULT_ENVIRONMENT, Environment
 from .exceptions import APIError, AuthenticationError, NetworkError
-from .resources import PoolsResource
+from .resources import (
+    CertificatesResource,
+    DistributionsResource,
+    HistoryResource,
+    PartnersResource,
+    PoolsResource,
+)
 
 
 class TheMortgageOfficeClient:
@@ -62,16 +68,20 @@ class TheMortgageOfficeClient:
 
         # Initialize Shares resources
         self.shares_pools: PoolsResource = PoolsResource(self, PoolType.SHARES)
-        self.shares_partners: PoolsResource = PoolsResource(self, PoolType.SHARES)
-        self.shares_distributions: PoolsResource = PoolsResource(self, PoolType.SHARES)
-        self.shares_certificates: PoolsResource = PoolsResource(self, PoolType.SHARES)
-        self.shares_history: PoolsResource = PoolsResource(self, PoolType.SHARES)
+        self.shares_partners: PartnersResource = PartnersResource(self, PoolType.SHARES)
+        self.shares_distributions: DistributionsResource = DistributionsResource(
+            self, PoolType.SHARES
+        )
+        self.shares_certificates: CertificatesResource = CertificatesResource(self, PoolType.SHARES)
+        self.shares_history: HistoryResource = HistoryResource(self, PoolType.SHARES)
 
         # Initialize Capital resources
         self.capital_pools: PoolsResource = PoolsResource(self, PoolType.CAPITAL)
-        self.capital_partners: PoolsResource = PoolsResource(self, PoolType.CAPITAL)
-        self.capital_distributions: PoolsResource = PoolsResource(self, PoolType.CAPITAL)
-        self.capital_history: PoolsResource = PoolsResource(self, PoolType.CAPITAL)
+        self.capital_partners: PartnersResource = PartnersResource(self, PoolType.CAPITAL)
+        self.capital_distributions: DistributionsResource = DistributionsResource(
+            self, PoolType.CAPITAL
+        )
+        self.capital_history: HistoryResource = HistoryResource(self, PoolType.CAPITAL)
 
     def _debug_log(self, message: str) -> None:
         """Log debug message to stderr if debug mode is enabled."""

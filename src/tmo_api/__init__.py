@@ -10,7 +10,14 @@ from .exceptions import (
     ValidationError,
 )
 from .models import BaseModel, BaseResponse
-from .resources import PoolsResource, PoolType
+from .resources import (
+    CertificatesResource,
+    DistributionsResource,
+    HistoryResource,
+    PartnersResource,
+    PoolsResource,
+    PoolType,
+)
 
 __version__ = "0.0.1"
 
@@ -27,4 +34,8 @@ __all__ = [
     "BaseResponse",
     "PoolsResource",
     "PoolType",
+    "PartnersResource",
+    "DistributionsResource",
+    "CertificatesResource",
+    "HistoryResource",
 ]
