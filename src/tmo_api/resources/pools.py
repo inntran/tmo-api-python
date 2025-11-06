@@ -1,0 +1,154 @@
+"""Pools resource for The Mortgage Office SDK."""
+
+from enum import Enum
+from typing import TYPE_CHECKING, Any, Dict, List, cast
+
+if TYPE_CHECKING:
+    from ..client import TheMortgageOfficeClient
+
+
+class PoolType(Enum):
+    """Pool types supported by the API."""
+
+    SHARES = "Shares"
+    CAPITAL = "Capital"
+
+
+class PoolsResource:
+    """Resource for managing mortgage pools."""
+
+    def __init__(
+        self, client: "TheMortgageOfficeClient", pool_type: PoolType = PoolType.SHARES
+    ) -> None:
+        """Initialize the pools resource.
+
+        Args:
+            client: The base client instance
+            pool_type: The type of pool (Shares or Capital)
+        """
+        self.client = client
+        self.pool_type = pool_type
+        self.base_path = f"LSS.svc/{pool_type.value}"
+
+    def get_pool(self, account: str) -> Dict[str, Any]:
+        """Get pool details by account.
+
+        Args:
+            account: The pool account identifier
+
+        Returns:
+            Pool data dictionary
+
+        Raises:
+            APIError: If the API returns an error
+            ValidationError: If account is invalid
+        """
+        if not account:
+            from ..exceptions import ValidationError
+
+            raise ValidationError("Account parameter is required")
+
+        endpoint = f"{self.base_path}/Pools/{account}"
+        response_data = self.client.get(endpoint)
+        return response_data
+
+    def get_pool_partners(self, account: str) -> list:
+        """Get pool partners by account.
+
+        Args:
+            account: The pool account identifier
+
+        Returns:
+            List of pool partners
+
+        Raises:
+            APIError: If the API returns an error
+            ValidationError: If account is invalid
+        """
+        if not account:
+            from ..exceptions import ValidationError
+
+            raise ValidationError("Account parameter is required")
+
+        endpoint = f"{self.base_path}/Pools/{account}/Partners"
+        response_data = self.client.get(endpoint)
+        return cast(List[Any], response_data.get("Data", []))
+
+    def get_pool_loans(self, account: str) -> list:
+        """Get pool loans by account.
+
+        Args:
+            account: The pool account identifier
+
+        Returns:
+            List of pool loans
+
+        Raises:
+            APIError: If the API returns an error
+            ValidationError: If account is invalid
+        """
+        if not account:
+            from ..exceptions import ValidationError
+
+            raise ValidationError("Account parameter is required")
+
+        endpoint = f"{self.base_path}/Pools/{account}/Loans"
+        response_data = self.client.get(endpoint)
+        return cast(List[Any], response_data.get("Data", []))
+
+    def get_pool_bank_accounts(self, account: str) -> list:
+        """Get pool bank accounts by account.
+
+        Args:
+            account: The pool account identifier
+
+        Returns:
+            List of pool bank accounts
+
+        Raises:
+            APIError: If the API returns an error
+            ValidationError: If account is invalid
+        """
+        if not account:
+            from ..exceptions import ValidationError
+
+            raise ValidationError("Account parameter is required")
+
+        endpoint = f"{self.base_path}/Pools/{account}/BankAccounts"
+        response_data = self.client.get(endpoint)
+        return cast(List[Any], response_data.get("Data", []))
+
+    def get_pool_attachments(self, account: str) -> list:
+        """Get pool attachments by account.
+
+        Args:
+            account: The pool account identifier
+
+        Returns:
+            List of pool attachments
+
+        Raises:
+            APIError: If the API returns an error
+            ValidationError: If account is invalid
+        """
+        if not account:
+            from ..exceptions import ValidationError
+
+            raise ValidationError("Account parameter is required")
+
+        endpoint = f"{self.base_path}/Pools/{account}/Attachments"
+        response_data = self.client.get(endpoint)
+        return cast(List[Any], response_data.get("Data", []))
+
+    def list_all(self) -> list:
+        """List all pools.
+
+        Returns:
+            List of all pools
+
+        Raises:
+            APIError: If the API returns an error
+        """
+        endpoint = f"{self.base_path}/Pools"
+        response_data = self.client.get(endpoint)
+        return cast(List[Any], response_data.get("Data", []))
