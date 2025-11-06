@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from tmo_api.client import TheMortgageOfficeClient
+from tmo_api.client import TMOClient
 from tmo_api.exceptions import ValidationError
 from tmo_api.resources.certificates import CertificatesResource
 from tmo_api.resources.pools import PoolType
@@ -16,7 +16,7 @@ class TestCertificatesResource:
     @pytest.fixture
     def client(self, mock_token, mock_database):
         """Create a test client."""
-        return TheMortgageOfficeClient(token=mock_token, database=mock_database)
+        return TMOClient(token=mock_token, database=mock_database)
 
     def test_certificates_resource_init_shares(self, client):
         """Test CertificatesResource initialization with Shares type."""
@@ -31,7 +31,7 @@ class TestCertificatesResource:
         assert resource.pool_type == PoolType.CAPITAL
         assert resource.base_path == "LSS.svc/Capital"
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_certificates_no_filters(self, mock_get, client):
         """Test get_certificates without filters."""
         mock_get.return_value = {"Status": 0, "Data": [{"certificate_id": 1}]}
@@ -42,7 +42,7 @@ class TestCertificatesResource:
         mock_get.assert_called_once_with("LSS.svc/Shares/Certificates", params=None)
         assert isinstance(certificates, list)
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_certificates_with_date_filters(self, mock_get, client):
         """Test get_certificates with date filters."""
         mock_get.return_value = {"Status": 0, "Data": [{"certificate_id": 1}]}
@@ -56,7 +56,7 @@ class TestCertificatesResource:
         )
         assert isinstance(certificates, list)
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_certificates_with_partner_account(self, mock_get, client):
         """Test get_certificates with partner_account filter."""
         mock_get.return_value = {"Status": 0, "Data": [{"certificate_id": 1}]}
@@ -69,7 +69,7 @@ class TestCertificatesResource:
         )
         assert isinstance(certificates, list)
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_certificates_with_pool_account(self, mock_get, client):
         """Test get_certificates with pool_account filter."""
         mock_get.return_value = {"Status": 0, "Data": [{"certificate_id": 1}]}
@@ -82,7 +82,7 @@ class TestCertificatesResource:
         )
         assert isinstance(certificates, list)
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_certificates_with_all_filters(self, mock_get, client):
         """Test get_certificates with all filters."""
         mock_get.return_value = {"Status": 0, "Data": [{"certificate_id": 1}]}
@@ -106,7 +106,7 @@ class TestCertificatesResource:
         )
         assert isinstance(certificates, list)
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_certificates_invalid_start_date(self, mock_get, client):
         """Test get_certificates with invalid start_date format."""
         resource = CertificatesResource(client, PoolType.SHARES)
@@ -117,7 +117,7 @@ class TestCertificatesResource:
         assert "start_date must be in MM/DD/YYYY format" in str(exc_info.value)
         mock_get.assert_not_called()
 
-    @patch.object(TheMortgageOfficeClient, "get")
+    @patch.object(TMOClient, "get")
     def test_get_certificates_invalid_end_date(self, mock_get, client):
         """Test get_certificates with invalid end_date format."""
         resource = CertificatesResource(client, PoolType.SHARES)
