@@ -77,6 +77,7 @@ class TestPool:
             "Name": "Test Pool",
             "InceptionDate": "01/01/2024",
             "LastEvaluation": "12/31/2024",
+            "SysTimeStamp": "11/15/2024",
         }
         pool = Pool(data)
 
@@ -87,6 +88,8 @@ class TestPool:
         assert pool.InceptionDate == datetime(2024, 1, 1)
         assert isinstance(pool.LastEvaluation, datetime)
         assert pool.LastEvaluation == datetime(2024, 12, 31)
+        assert isinstance(pool.SysTimeStamp, datetime)
+        assert pool.SysTimeStamp == datetime(2024, 11, 15)
 
     def test_pool_with_nested_objects(self):
         """Test Pool with nested OtherAssets and OtherLiabilities."""
