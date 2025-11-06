@@ -1,7 +1,9 @@
 """Pools resource for The Mortgage Office SDK."""
 
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Dict, List, cast
+from typing import TYPE_CHECKING, Any, List, cast
+
+from ..models.pool import Pool, PoolResponse, PoolsResponse
 
 if TYPE_CHECKING:
     from ..client import TheMortgageOfficeClient
@@ -30,14 +32,14 @@ class PoolsResource:
         self.pool_type = pool_type
         self.base_path = f"LSS.svc/{pool_type.value}"
 
-    def get_pool(self, account: str) -> Dict[str, Any]:
+    def get_pool(self, account: str) -> Pool:
         """Get pool details by account.
 
         Args:
             account: The pool account identifier
 
         Returns:
-            Pool data dictionary
+            Pool object with detailed information
 
         Raises:
             APIError: If the API returns an error
@@ -50,7 +52,8 @@ class PoolsResource:
 
         endpoint = f"{self.base_path}/Pools/{account}"
         response_data = self.client.get(endpoint)
-        return response_data
+        response = PoolResponse(response_data)
+        return response.pool  # type: ignore
 
     def get_pool_partners(self, account: str) -> list:
         """Get pool partners by account.
@@ -140,7 +143,7 @@ class PoolsResource:
         response_data = self.client.get(endpoint)
         return cast(List[Any], response_data.get("Data", []))
 
-    def list_all(self) -> list:
+    def list_all(self) -> List[Pool]:
         """List all pools.
 
         Returns:
@@ -151,4 +154,5 @@ class PoolsResource:
         """
         endpoint = f"{self.base_path}/Pools"
         response_data = self.client.get(endpoint)
-        return cast(List[Any], response_data.get("Data", []))
+        response = PoolsResponse(response_data)
+        return response.pools
