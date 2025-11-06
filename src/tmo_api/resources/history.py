@@ -11,9 +11,7 @@ if TYPE_CHECKING:
 class HistoryResource:
     """Resource for managing share transaction history."""
 
-    def __init__(
-        self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES
-    ) -> None:
+    def __init__(self, client: "TMOClient", pool_type: PoolType = PoolType.SHARES) -> None:
         """Initialize the history resource.
 
         Args:
