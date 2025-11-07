@@ -70,7 +70,16 @@ class TestClientInitialization:
         assert client.session.headers["Token"] == mock_token
         assert client.session.headers["Database"] == mock_database
         assert client.session.headers["Content-Type"] == "application/json"
-        assert "User-Agent" in client.session.headers
+        assert (
+            client.session.headers["User-Agent"]
+            == f"python-tmo-api/{__version__} (https://inntran.github.io/tmo-api-python/)"
+        )
+
+    def test_client_custom_user_agent(self, mock_token, mock_database):
+        """Test providing a custom user agent for the session."""
+        custom_agent = "custom-agent/1.0"
+        client = TMOClient(token=mock_token, database=mock_database, user_agent=custom_agent)
+        assert client.session.headers["User-Agent"] == custom_agent
 
     def test_client_resources_initialized(self, mock_token, mock_database):
         """Test that all resource objects are initialized."""
