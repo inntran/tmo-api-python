@@ -622,10 +622,10 @@ def show_endpoint(args: argparse.Namespace) -> None:  # pragma: no cover
                 content.append(f"[bold]Request Body ({body_mode}):[/bold]")
                 if body_mode == "raw":
                     raw_body = body.get("raw", "")
-                    if raw_body and len(raw_body) < 500:
-                        content.append(f"[dim]{raw_body[:500]}[/dim]")
+                    if raw_body and len(raw_body) < 5000:
+                        content.append(f"[dim]{raw_body}[/dim]")
                     elif raw_body:
-                        content.append(f"[dim]{raw_body[:500]}...[/dim]")
+                        content.append(f"[dim]{raw_body[:5000]}...[/dim]")
 
         panel = Panel("\n".join(content), title=title, border_style="green")
         console.print(panel)
