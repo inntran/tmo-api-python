@@ -12,13 +12,13 @@
         <meta name="author" content="Yinchuan Song">
       
       
-        <link rel="canonical" href="https://inntran.github.io/tmo-api-python/latest/user-guide/history/">
+        <link rel="canonical" href="https://inntran.github.io/tmo-api-python/latest/user-guide/cli/">
       
       
-        <link rel="prev" href="../certificates/">
+        <link rel="prev" href="../../getting-started/authentication/">
       
       
-        <link rel="next" href="../../api-reference/client/">
+        <link rel="next" href="../client/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>History - TMO API Python SDK</title>
+        <title>CLI (tmoapi) - TMO API Python SDK</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#history" class="md-skip">
+        <a href="#cli-tmoapi" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              History
+              CLI (tmoapi)
             
           </span>
         </div>
@@ -272,7 +272,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../cli/" class="md-tabs__link">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -583,10 +583,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    CLI (tmoapi)
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -597,6 +619,95 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-specs-are-stored" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where specs are stored
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download" class="md-nav__link">
+    <span class="md-ellipsis">
+      download
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy" class="md-nav__link">
+    <span class="md-ellipsis">
+      copy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show" class="md-nav__link">
+    <span class="md-ellipsis">
+      show
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exit-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exit codes
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -721,32 +832,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    History
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../history/" class="md-nav__link">
         
   
   
@@ -757,50 +846,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Methods
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get_history" class="md-nav__link">
-    <span class="md-ellipsis">
-      get_history()
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1127,19 +1172,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
+  <a href="#where-specs-are-stored" class="md-nav__link">
     <span class="md-ellipsis">
-      Methods
+      Where specs are stored
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#get_history" class="md-nav__link">
+  <a href="#download" class="md-nav__link">
     <span class="md-ellipsis">
-      get_history()
+      download
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy" class="md-nav__link">
+    <span class="md-ellipsis">
+      copy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show" class="md-nav__link">
+    <span class="md-ellipsis">
+      show
     </span>
   </a>
   
@@ -1147,6 +1228,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exit-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exit codes
+    </span>
+  </a>
   
 </li>
       
@@ -1169,38 +1259,86 @@
   
 
 
-<h1 id="history">History<a class="headerlink" href="#history" title="Permanent link">&para;</a></h1>
-<p>The <code>HistoryResource</code> provides methods for retrieving account history.</p>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
-<h3 id="get_history">get_history()<a class="headerlink" href="#get_history" title="Permanent link">&para;</a></h3>
-<p>Get account history with optional filtering.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># All history</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">history</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">get_history</span><span class="p">()</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Filter by date range</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">history</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">get_history</span><span class="p">(</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01/01/2024&quot;</span><span class="p">,</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;12/31/2024&quot;</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">)</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Filter by partner account</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">history</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">get_history</span><span class="p">(</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">partner_account</span><span class="o">=</span><span class="s2">&quot;PART001&quot;</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">)</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1"># Filter by pool account</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">history</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">get_history</span><span class="p">(</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">pool_account</span><span class="o">=</span><span class="s2">&quot;POOL001&quot;</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">)</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1"># Combine filters</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="n">history</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">get_history</span><span class="p">(</span>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;01/01/2024&quot;</span><span class="p">,</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">end_date</span><span class="o">=</span><span class="s2">&quot;12/31/2024&quot;</span><span class="p">,</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">partner_account</span><span class="o">=</span><span class="s2">&quot;PART001&quot;</span><span class="p">,</span>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">pool_account</span><span class="o">=</span><span class="s2">&quot;POOL001&quot;</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="p">)</span>
+<h1 id="cli-tmoapi">CLI (<code>tmoapi</code>)<a class="headerlink" href="#cli-tmoapi" title="Permanent link">&para;</a></h1>
+<p>The SDK ships with a small CLI helper named <code>tmoapi</code>. It lets you download,
+store, and explore the official Postman collection for The Mortgage Office
+without touching Python code.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>tmoapi<span class="w"> </span>--help
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>usage:<span class="w"> </span>tmoapi<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">{</span>download,copy,list,show<span class="o">}</span><span class="w"> </span>...
 </span></code></pre></div>
+<p>The CLI installs automatically alongside the library (<code>pip install tmo-api</code>).</p>
+<h2 id="where-specs-are-stored">Where specs are stored<a class="headerlink" href="#where-specs-are-stored" title="Permanent link">&para;</a></h2>
+<p><code>tmoapi</code> looks for API collection files in two places, in this order:</p>
+<ol>
+<li><code>assets/postman_collection/</code> inside the installed package (what end users get).</li>
+<li>The current working directory (handy for SDK development).</li>
+</ol>
+<p>When you download or copy a collection, the CLI writes it back to
+<code>assets/postman_collection/tmo_api_collection_YYYYMMDD.json</code>. During local
+development this directory is resolved by walking up from the current working
+directory until a <code>pyproject.toml</code> file is found.</p>
+<p>If you want to use a different file, pass <code>--api-spec path/to/file.json</code> to the
+commands that read specs.</p>
+<h2 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
+<h3 id="download"><code>download</code><a class="headerlink" href="#download" title="Permanent link">&para;</a></h3>
+<p>Fetches the latest Postman collection from The Mortgage Office developer portal
+and stores it locally.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>tmoapi<span class="w"> </span>download
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>tmoapi<span class="w"> </span>download<span class="w"> </span>--output<span class="w"> </span>./tmo_api_collection_latest.json
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-o</code>, <code>--output</code></td>
+<td>Optional explicit destination. Without it the CLI selects the assets directory automatically and names the file after the publish date embedded in the collection.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="copy"><code>copy</code><a class="headerlink" href="#copy" title="Permanent link">&para;</a></h3>
+<p>Copies a collection from another location (file path or URL) into the local
+assets directory. This is useful when you need to pin the SDK to an older spec
+revision.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>tmoapi<span class="w"> </span>copy<span class="w"> </span>./archives/tmo_api_collection_20230901.json
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>tmoapi<span class="w"> </span>copy<span class="w"> </span>https://example.com/tmo_api_collection_preview.json
+</span></code></pre></div>
+<p>The copied file is always saved into <code>assets/postman_collection/</code>.</p>
+<h3 id="list"><code>list</code><a class="headerlink" href="#list" title="Permanent link">&para;</a></h3>
+<p>Prints every endpoint contained in the current collection. The output is grouped
+in a Rich table that includes the HTTP method, the folder-style name, and the
+path.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>tmoapi<span class="w"> </span>list
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>tmoapi<span class="w"> </span>list<span class="w"> </span>--api-spec<span class="w"> </span>./tmo_api_collection_preview.json
+</span></code></pre></div>
+<p>Use this command when you need to find the canonical name of an endpoint before
+looking up its full documentation.</p>
+<h3 id="show"><code>show</code><a class="headerlink" href="#show" title="Permanent link">&para;</a></h3>
+<p>Displays detailed information about a single endpoint. You can search by the
+endpoint's GUID, its name, a folder-qualified name, or even a fragment of the
+URL. Rich formatting is applied to description text, headers, path variables,
+query parameters, and request body snippets so you can quickly copy what you
+need.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>tmoapi<span class="w"> </span>show<span class="w"> </span><span class="s2">&quot;Loan Origination/Create Loan&quot;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>tmoapi<span class="w"> </span>show<span class="w"> </span>28b56336-cb43-41c6-a8b7-ec360d13a1f7
+</span></code></pre></div>
+<p>If multiple endpoints match your query the CLI presents them in a table and asks
+you to refine the search.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Pair <code>list</code> and <code>show</code> for the quickest workflow: use <code>tmoapi list | rg Payment</code>
+to find the name you care about, then <code>tmoapi show "&lt;name&gt;"</code> to see the
+request details.</p>
+</div>
+<h2 id="exit-codes">Exit codes<a class="headerlink" href="#exit-codes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>0</code> – success (including the "multiple matches" case for <code>show</code>)</li>
+<li><code>1</code> – user or network error (missing file, download failure, unknown command, etc.)</li>
+</ul>
 
 
 
