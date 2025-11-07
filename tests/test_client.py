@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, Mock, patch
 import pytest
 import requests
 
+from tmo_api._version import __version__
 from tmo_api.client import TMOClient
 from tmo_api.environments import Environment
 from tmo_api.exceptions import (
