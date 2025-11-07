@@ -10,6 +10,7 @@ authors = [
 requires-python = ">=3.9"
 dependencies = [
     "requests>=2.25.0,<3.0.0",
+    "rich>=13.0.0",
 ]
 keywords = ["TMO", "The Mortgage Office", "Mortgage Pools", "Mortgage Pool Shares"]
 classifiers = [
@@ -34,6 +35,9 @@ classifiers = [
 Repository = "https://github.com/inntran/tmo-api-python"
 Issues = "https://github.com/inntran/tmo-api-python/issues"
 
+[project.scripts]
+tmoapi = "tmo_api.cli.tmoapi:main"
+
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
@@ -56,6 +60,9 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/tmo_api"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"assets" = "assets"
 
 [tool.black]
 line-length = 100

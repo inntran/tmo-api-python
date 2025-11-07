@@ -78,6 +78,7 @@ nav:
     - Quick Start: getting-started/quickstart.md
     - Authentication: getting-started/authentication.md
   - User Guide:
+    - CLI (tmoapi): user-guide/cli.md
     - Client: user-guide/client.md
     - Pools: user-guide/pools.md
     - Partners: user-guide/partners.md
