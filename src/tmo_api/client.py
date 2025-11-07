@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 
 import requests
 
+from ._version import __version__
 from .environments import DEFAULT_ENVIRONMENT, Environment
 from .exceptions import APIError, AuthenticationError, NetworkError
 from .resources import (
@@ -28,6 +29,7 @@ class TMOClient:
         environment: Union[Environment, str] = DEFAULT_ENVIRONMENT,
         timeout: int = 30,
         debug: bool = False,
+        user_agent: Optional[str] = None,
     ) -> None:
         """Initialize the client.
 
@@ -37,11 +39,16 @@ class TMOClient:
             environment: API environment (US, CANADA, AUSTRALIA) or custom URL
             timeout: Request timeout in seconds (default: 30)
             debug: Enable debug logging (default: False)
+            user_agent: Custom User-Agent header (default includes package version)
         """
         self.token: str = token
         self.database: str = database
         self.timeout: int = timeout
         self.debug: bool = debug
+        self.user_agent: str = (
+            user_agent
+            or f"python-tmo-api/{__version__} (https://inntran.github.io/tmo-api-python/)"
+        )
 
         # Handle environment parameter
         if isinstance(environment, str):
@@ -59,7 +66,7 @@ class TMOClient:
                 "Token": self.token,
                 "Database": self.database,
                 "Content-Type": "application/json",
-                "User-Agent": "themortgageoffice-sdk-python",
+                "User-Agent": self.user_agent,
             }
         )
 
