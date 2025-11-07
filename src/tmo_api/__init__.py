@@ -1,5 +1,6 @@
 """The Mortgage Office API SDK for Python."""
 
+from ._version import __version__
 from .client import TMOClient
 from .environments import DEFAULT_ENVIRONMENT, Environment
 from .exceptions import (
@@ -18,8 +19,6 @@ from .resources import (
     PoolsResource,
     PoolType,
 )
-
-__version__ = "0.0.1"
 
 __all__ = [
     "TMOClient",
