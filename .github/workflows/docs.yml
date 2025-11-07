@@ -1,13 +1,11 @@
 name: Deploy Documentation
 
 on:
-  push:
-    branches:
-      - main
-      - staging
-      - develop
-    tags:
-      - 'v*'
+  workflow_run:
+    workflows:
+      - Tests
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -15,11 +13,34 @@ permissions:
 
 jobs:
   deploy:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push' &&
+        (
+          github.event.workflow_run.head_branch == 'main' ||
+          github.event.workflow_run.head_branch == 'staging' ||
+          github.event.workflow_run.head_branch == 'develop' ||
+          github.event.workflow_run.head_branch == '' ||
+          github.event.workflow_run.head_branch == null
+        )
+      )
     runs-on: ubuntu-latest
+    env:
+      TARGET_BRANCH: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref_name }}
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0  # Fetch all history for mike versioning
+
+      - name: Detect tag (workflow_run)
+        id: tag
+        if: env.TARGET_BRANCH == ''
+        run: |
+          TAG=$(git describe --tags --exact-match 2>/dev/null || true)
+          echo "value=$TAG" >> "$GITHUB_OUTPUT"
 
       - name: Configure Git Credentials
         run: |
@@ -38,23 +59,23 @@ jobs:
           pip install -e ".[docs]"
 
       - name: Deploy documentation (main branch)
-        if: github.ref == 'refs/heads/main'
+        if: env.TARGET_BRANCH == 'main'
         run: |
           mike deploy --push --update-aliases latest stable
           mike set-default --push latest
 
       - name: Deploy documentation (staging branch)
-        if: github.ref == 'refs/heads/staging'
+        if: env.TARGET_BRANCH == 'staging'
         run: |
           mike deploy --push staging
 
       - name: Deploy documentation (develop branch)
-        if: github.ref == 'refs/heads/develop'
+        if: env.TARGET_BRANCH == 'develop'
         run: |
           mike deploy --push dev
 
       - name: Set default alias when missing (develop)
-        if: github.ref == 'refs/heads/develop'
+        if: env.TARGET_BRANCH == 'develop'
         run: |
           DEFAULT_ALIAS=$(mike list --remote 2>/dev/null | awk '/^\*/ {print $2}')
           if [ -z "$DEFAULT_ALIAS" ]; then
@@ -62,8 +83,9 @@ jobs:
           fi
 
       - name: Deploy documentation (version tag)
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: steps.tag.outputs.value != ''
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
+          VERSION=${{ steps.tag.outputs.value }}
+          VERSION=${VERSION#v}
           mike deploy --push --update-aliases $VERSION stable
           mike set-default --push $VERSION
