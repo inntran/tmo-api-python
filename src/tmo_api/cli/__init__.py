@@ -299,6 +299,7 @@ def format_output(data: Any, format_type: str = "text") -> str:
         Formatted string
     """
     if format_type == "json":
+        json_data: Any
         # Convert objects to dictionaries for JSON serialization
         if isinstance(data, list):
             json_data = []
@@ -394,7 +395,7 @@ def format_table_output(data: Any) -> str:
                 return "No results found"
 
             # Get all unique keys from all objects
-            all_keys = set()
+            all_keys: set[str] = set()
             for item in dict_data:
                 if isinstance(item, dict):
                     all_keys.update(item.keys())
