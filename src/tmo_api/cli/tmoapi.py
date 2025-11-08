@@ -13,6 +13,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
+from . import TMORC_PATH
+
 console = Console()
 
 
@@ -635,6 +637,55 @@ def show_endpoint(args: argparse.Namespace) -> None:  # pragma: no cover
         sys.exit(1)
 
 
+def init_config(args: argparse.Namespace) -> None:  # pragma: no cover
+    """Initialize or update ~/.tmorc configuration file."""
+    console.print("[cyan]Initializing TMO API configuration...[/cyan]\n")
+
+    if TMORC_PATH.exists() and not args.force:
+        console.print(f"[yellow]Config file already exists at:[/yellow]")
+        console.print(f"  [bold]{TMORC_PATH}[/bold]\n")
+        console.print("[dim]Use --force to overwrite the existing file[/dim]")
+        sys.exit(1)
+
+    # Create default config with demo profile
+    config_content = """# TMO API Configuration File
+# Location: ~/.tmorc
+# Format: INI-style configuration with profiles
+
+[demo]
+token = TMO
+database = API Sandbox
+environment = us
+
+# Add your custom profiles below
+# Example:
+# [production]
+# token = YOUR_TOKEN_HERE
+# database = YOUR_DATABASE_NAME
+# environment = us
+# timeout = 30
+"""
+
+    console.print(f"[cyan]Writing configuration file to:[/cyan]")
+    console.print(f"  [bold]{TMORC_PATH}[/bold]\n")
+
+    TMORC_PATH.write_text(config_content)
+
+    console.print(f"[green]✓[/green] Configuration file created successfully!\n")
+    console.print("[bold]What's inside:[/bold]")
+    console.print("  • Default '[cyan]demo[/cyan]' profile (TMO API Sandbox)")
+    console.print("  • Template for adding your own profiles\n")
+
+    console.print("[bold]Next steps:[/bold]")
+    console.print("  1. Edit the file to add your production credentials:")
+    console.print(f"     [dim]vim {TMORC_PATH}[/dim]")
+    console.print("  2. Use profiles in CLI commands:")
+    console.print("     [dim]tmopo shares pools              # Uses 'demo' profile[/dim]")
+    console.print("     [dim]tmopo -P production shares pools # Uses 'production' profile[/dim]")
+    console.print("  3. Override with command-line flags if needed:")
+    console.print("     [dim]tmopo --token XXX --database YYY shares pools[/dim]")
+
+
 def main() -> None:  # pragma: no cover
     """Main entry point for tmoapi command."""
     parser = argparse.ArgumentParser(
@@ -642,6 +693,12 @@ def main() -> None:  # pragma: no cover
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Subcommands")
+
+    # Init configuration subcommand
+    init_parser = subparsers.add_parser("init", help="Initialize ~/.tmorc configuration file")
+    init_parser.add_argument(
+        "--force", action="store_true", help="Overwrite existing configuration file"
+    )
 
     # Download documentation subcommand
     download_parser = subparsers.add_parser("download", help="Download API documentation")
@@ -674,7 +731,9 @@ def main() -> None:  # pragma: no cover
         parser.print_help()
         sys.exit(1)
 
-    if args.command == "download":
+    if args.command == "init":
+        init_config(args)
+    elif args.command == "download":
         download_api_doc(args)
     elif args.command == "copy":
         copy_api_doc(args)
