@@ -2,12 +2,14 @@
 
 import argparse
 import configparser
+import csv
 import json
 import os
 import re
+import sys
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 from ..client import TMOClient
 from ..environments import Environment
@@ -306,12 +308,18 @@ def format_output(data: Any, format_type: str = "text") -> str:
             for item in data:
                 if hasattr(item, "__dict__"):
                     json_data.append(
-                        {k: v for k, v in item.__dict__.items() if not k.startswith("_")}
+                        {
+                            k: v
+                            for k, v in item.__dict__.items()
+                            if not k.startswith("_") and k != "raw_data"
+                        }
                     )
                 else:
                     json_data.append(item)
         elif hasattr(data, "__dict__"):
-            json_data = {k: v for k, v in data.__dict__.items() if not k.startswith("_")}
+            json_data = {
+                k: v for k, v in data.__dict__.items() if not k.startswith("_") and k != "raw_data"
+            }
         else:
             json_data = data
 
@@ -488,3 +496,324 @@ def format_multiline_table(data: list, headers: list) -> str:
             lines.append(f"{header.ljust(max_field_width)} : {value_display}")
 
     return "\n".join(lines)
+
+
+def is_name_value_array(data: Any) -> bool:
+    """Check if an array contains name-value pair objects.
+
+    Returns True if all items are dicts with 'Name' and 'Value' keys.
+
+    Args:
+        data: Data to check
+
+    Returns:
+        True if data is a name-value array
+    """
+    if not isinstance(data, list) or len(data) == 0:
+        return False
+
+    for item in data:
+        if not isinstance(item, dict):
+            return False
+        if "Name" not in item or "Value" not in item:
+            return False
+
+    return True
+
+
+def flatten_name_value_array(data: List[Dict[str, Any]], parent_key: str = "") -> Dict[str, Any]:
+    """Flatten a name-value array into a dictionary using Name as keys and Value as values.
+
+    Args:
+        data: List of dictionaries with Name and Value keys
+        parent_key: Parent key prefix for the flattened keys
+
+    Returns:
+        Flattened dictionary with Name fields as keys
+    """
+    items = {}
+    for item in data:
+        name = str(item.get("Name", "")).strip()
+        value = item.get("Value", "")
+
+        if name:  # Only add if name is not empty
+            # Clean up the name to be a valid column name
+            clean_name = name.replace(" ", "_").replace("-", "_").replace(".", "_")
+            if parent_key:
+                key = f"{parent_key}_{clean_name}"
+            else:
+                key = clean_name
+            items[key] = value
+
+    return items
+
+
+def flatten_json(
+    data: Any,
+    separator: str = "_",
+    max_levels: int = 2,
+    current_level: int = 0,
+    parent_key: str = "",
+) -> Dict[str, Any]:
+    """Flatten nested JSON data to a specified depth.
+
+    Args:
+        data: The data to flatten (dict, list, or primitive)
+        separator: String to use for separating nested keys
+        max_levels: Maximum levels to flatten
+        current_level: Current nesting level (for recursion)
+        parent_key: Parent key for building nested key names
+
+    Returns:
+        Flattened dictionary
+    """
+    items = {}
+
+    if isinstance(data, dict):
+        for key, value in data.items():
+            new_key = f"{parent_key}{separator}{key}" if parent_key else key
+
+            # If we've reached max levels, store as JSON string
+            if current_level >= max_levels:
+                if isinstance(value, (dict, list)):
+                    items[new_key] = json.dumps(value, default=str)
+                else:
+                    items[new_key] = value
+            else:
+                # Continue flattening
+                if isinstance(value, (dict, list)):
+                    items.update(
+                        flatten_json(value, separator, max_levels, current_level + 1, new_key)
+                    )
+                else:
+                    items[new_key] = value
+
+    elif isinstance(data, list):
+        # Check if this is a name-value array
+        if is_name_value_array(data):
+            items.update(flatten_name_value_array(data, parent_key))
+        else:
+            # Regular array processing
+            for i, value in enumerate(data):
+                new_key = f"{parent_key}{separator}{i}" if parent_key else str(i)
+
+                # If we've reached max levels, store as JSON string
+                if current_level >= max_levels:
+                    if isinstance(value, (dict, list)):
+                        items[new_key] = json.dumps(value, default=str)
+                    else:
+                        items[new_key] = value
+                else:
+                    # Continue flattening
+                    if isinstance(value, (dict, list)):
+                        items.update(
+                            flatten_json(value, separator, max_levels, current_level + 1, new_key)
+                        )
+                    else:
+                        items[new_key] = value
+    else:
+        # Primitive value
+        if parent_key:
+            items[parent_key] = data
+        else:
+            items["value"] = data
+
+    return items
+
+
+def prepare_data_for_flattening(data: Any) -> List[Dict[str, Any]]:
+    """Prepare data for CSV/XLSX export by flattening and converting to list of dicts.
+
+    Args:
+        data: Input data (can be dict, list, or objects with __dict__)
+
+    Returns:
+        List of flattened dictionaries
+    """
+    # Fields to exclude from output
+    excluded_fields = {"raw_data"}
+
+    # Convert objects to dictionaries first
+    if isinstance(data, list):
+        dict_data = []
+        for item in data:
+            if hasattr(item, "__dict__"):
+                dict_data.append(
+                    {
+                        k: v
+                        for k, v in item.__dict__.items()
+                        if not k.startswith("_") and k not in excluded_fields
+                    }
+                )
+            elif isinstance(item, dict):
+                dict_data.append({k: v for k, v in item.items() if k not in excluded_fields})
+            else:
+                dict_data.append({"value": item})
+    elif hasattr(data, "__dict__"):
+        dict_data = [
+            {
+                k: v
+                for k, v in data.__dict__.items()
+                if not k.startswith("_") and k not in excluded_fields
+            }
+        ]
+    elif isinstance(data, dict):
+        dict_data = [{k: v for k, v in data.items() if k not in excluded_fields}]
+    else:
+        dict_data = [{"value": data}]
+
+    # Flatten each record
+    flattened_records = []
+    for record in dict_data:
+        flattened = flatten_json(record, separator="_", max_levels=2)
+        # Remove any excluded fields from flattened result as well
+        flattened = {k: v for k, v in flattened.items() if k not in excluded_fields}
+        flattened_records.append(flattened)
+
+    return flattened_records
+
+
+def write_to_csv(records: List[Dict[str, Any]], output_file: str) -> None:
+    """Write records to CSV file.
+
+    Args:
+        records: List of flattened dictionaries
+        output_file: Output file path
+    """
+    if not records:
+        print("No records to write", file=sys.stderr)
+        return
+
+    # Get all unique fieldnames from all records
+    fieldnames = set()
+    for record in records:
+        fieldnames.update(record.keys())
+
+    fieldnames = sorted(fieldnames)
+
+    with open(output_file, "w", newline="", encoding="utf-8") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for record in records:
+            # Ensure all values are strings and handle None values
+            clean_record = {}
+            for key in fieldnames:
+                value = record.get(key)
+                if value is None:
+                    clean_record[key] = ""
+                elif isinstance(value, (dict, list)):
+                    clean_record[key] = json.dumps(value, default=str)
+                else:
+                    clean_record[key] = str(value)
+            writer.writerow(clean_record)
+
+
+def write_to_xlsx(records: List[Dict[str, Any]], output_file: str) -> None:
+    """Write records to XLSX file using openpyxl.
+
+    Args:
+        records: List of flattened dictionaries
+        output_file: Output file path
+
+    Raises:
+        ImportError: If openpyxl is not installed
+    """
+    try:
+        import openpyxl
+    except ImportError:
+        raise ImportError(
+            "openpyxl is required for XLSX output. Install with: pip install tmo-api[xlsx]"
+        )
+
+    if not records:
+        print("No records to write", file=sys.stderr)
+        return
+
+    # Get all unique fieldnames from all records
+    fieldnames = set()
+    for record in records:
+        fieldnames.update(record.keys())
+
+    fieldnames = sorted(fieldnames)
+
+    # Create workbook and worksheet
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Data"
+
+    # Write headers
+    for col, fieldname in enumerate(fieldnames, 1):
+        ws.cell(row=1, column=col, value=fieldname)
+
+    # Write data
+    for row_idx, record in enumerate(records, 2):
+        for col_idx, fieldname in enumerate(fieldnames, 1):
+            value = record.get(fieldname)
+            if value is None:
+                cell_value = ""
+            elif isinstance(value, (dict, list)):
+                cell_value = json.dumps(value, default=str)
+            else:
+                cell_value = str(value)
+
+            ws.cell(row=row_idx, column=col_idx, value=cell_value)
+
+    # Auto-adjust column widths
+    for col in ws.columns:
+        max_length = 0
+        column = col[0].column_letter
+        for cell in col:
+            try:
+                if len(str(cell.value)) > max_length:
+                    max_length = len(str(cell.value))
+            except:
+                pass
+        adjusted_width = min(max_length + 2, 50)  # Cap at 50 characters
+        ws.column_dimensions[column].width = adjusted_width
+
+    wb.save(output_file)
+
+
+def handle_output(data: Any, output_path: Optional[str]) -> None:
+    """Handle output formatting and writing based on file extension or stdout.
+
+    Args:
+        data: Data to output
+        output_path: Output file path (None for stdout text format)
+
+    Raises:
+        ValueError: If output format cannot be determined
+    """
+    if output_path is None:
+        # No output file specified - print as text to stdout
+        output = format_output(data, "text")
+        print(output)
+        return
+
+    # Determine format from file extension
+    output_file = Path(output_path)
+    extension = output_file.suffix.lower()
+
+    if extension == ".json":
+        # JSON format
+        output = format_output(data, "json")
+        output_file.write_text(output, encoding="utf-8")
+        print(f"Wrote JSON output to {output_path}", file=sys.stderr)
+
+    elif extension == ".csv":
+        # CSV format - flatten and write
+        records = prepare_data_for_flattening(data)
+        write_to_csv(records, output_path)
+        print(f"Wrote {len(records)} record(s) to {output_path}", file=sys.stderr)
+
+    elif extension in [".xlsx", ".xls"]:
+        # XLSX format - flatten and write
+        records = prepare_data_for_flattening(data)
+        write_to_xlsx(records, output_path)
+        print(f"Wrote {len(records)} record(s) to {output_path}", file=sys.stderr)
+
+    else:
+        raise ValueError(
+            f"Unsupported output format: {extension}. Supported formats: .json, .csv, .xlsx"
+        )
