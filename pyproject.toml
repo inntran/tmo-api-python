@@ -36,6 +36,7 @@ Repository = "https://github.com/inntran/tmo-api-python"
 Issues = "https://github.com/inntran/tmo-api-python/issues"
 
 [project.scripts]
+tmopo = "tmo_api.cli.tmopo:main"
 tmoapi = "tmo_api.cli.tmoapi:main"
 
 [project.optional-dependencies]
@@ -52,6 +53,9 @@ docs = [
     "mkdocs>=1.6.0",
     "mkdocs-material>=9.6.0",
     "mike>=2.1.0",
+]
+xlsx = [
+    "openpyxl>=3.0.0",
 ]
 
 [build-system]
