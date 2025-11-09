@@ -685,11 +685,11 @@ def write_to_csv(records: List[Dict[str, Any]], output_file: str) -> None:
         return
 
     # Get all unique fieldnames from all records
-    fieldnames = set()
+    fieldnames_set: set[str] = set()
     for record in records:
-        fieldnames.update(record.keys())
+        fieldnames_set.update(record.keys())
 
-    fieldnames = sorted(fieldnames)
+    fieldnames = sorted(fieldnames_set)
 
     with open(output_file, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -721,6 +721,7 @@ def write_to_xlsx(records: List[Dict[str, Any]], output_file: str) -> None:
     """
     try:
         import openpyxl
+        from openpyxl.worksheet.worksheet import Worksheet
     except ImportError:
         raise ImportError(
             "openpyxl is required for XLSX output. Install with: pip install tmo-api[xlsx]"
@@ -731,15 +732,18 @@ def write_to_xlsx(records: List[Dict[str, Any]], output_file: str) -> None:
         return
 
     # Get all unique fieldnames from all records
-    fieldnames = set()
+    fieldnames_set: set[str] = set()
     for record in records:
-        fieldnames.update(record.keys())
+        fieldnames_set.update(record.keys())
 
-    fieldnames = sorted(fieldnames)
+    fieldnames = sorted(fieldnames_set)
 
     # Create workbook and worksheet
     wb = openpyxl.Workbook()
     ws = wb.active
+    if ws is None:
+        ws = wb.create_sheet("Data")
+    assert isinstance(ws, Worksheet)
     ws.title = "Data"
 
     # Write headers
@@ -760,17 +764,22 @@ def write_to_xlsx(records: List[Dict[str, Any]], output_file: str) -> None:
             ws.cell(row=row_idx, column=col_idx, value=cell_value)
 
     # Auto-adjust column widths
-    for col in ws.columns:
+    for col_tuple in ws.columns:
         max_length = 0
-        column = col[0].column_letter
-        for cell in col:
+        first_cell = col_tuple[0]
+        if hasattr(first_cell, "column_letter"):
+            column_letter = first_cell.column_letter
+        else:
+            continue  # Skip merged cells
+
+        for cell in col_tuple:
             try:
                 if len(str(cell.value)) > max_length:
                     max_length = len(str(cell.value))
-            except:
+            except Exception:
                 pass
         adjusted_width = min(max_length + 2, 50)  # Cap at 50 characters
-        ws.column_dimensions[column].width = adjusted_width
+        ws.column_dimensions[column_letter].width = adjusted_width
 
     wb.save(output_file)
 
