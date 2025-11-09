@@ -21,7 +21,7 @@ def make_args(**overrides):
         "partner": None,
         "start_date": "01/01/2024",
         "end_date": "01/31/2024",
-        "output_format": "text",
+        "output": None,
     }
     defaults.update(overrides)
     return Namespace(**defaults)
@@ -156,10 +156,10 @@ def test_shares_command_suggests_expanded_range(monkeypatch, capsys):
     monkeypatch.setattr(tmopo, "create_client_from_args", lambda _: object())
     monkeypatch.setattr(tmopo, "execute_shares_action", lambda *_, **__: [])
 
-    def fail_format_output(*_args, **_kwargs):
-        raise AssertionError("format_output should not be used for empty default results")
+    def fail_handle_output(*_args, **_kwargs):
+        raise AssertionError("handle_output should not be used for empty default results")
 
-    monkeypatch.setattr(tmopo, "format_output", fail_format_output)
+    monkeypatch.setattr(tmopo, "handle_output", fail_handle_output)
 
     tmopo.shares_command(args)
 
@@ -174,7 +174,14 @@ def test_shares_command_prints_formatted_output(monkeypatch, capsys):
     monkeypatch.setattr(tmopo, "validate_shares_args", lambda _: None)
     monkeypatch.setattr(tmopo, "create_client_from_args", lambda _: object())
     monkeypatch.setattr(tmopo, "execute_shares_action", lambda *_: [{"id": 1}])
-    monkeypatch.setattr(tmopo, "format_output", lambda result, fmt: f"{fmt}:{len(result)}")
+
+    # handle_output prints directly, so we mock it to print a test string
+    def mock_handle_output(result, output_path):
+        # When output_path is None, it prints text to stdout
+        if output_path is None:
+            print(f"text:{len(result)}")
+
+    monkeypatch.setattr(tmopo, "handle_output", mock_handle_output)
 
     tmopo.shares_command(args)
 
