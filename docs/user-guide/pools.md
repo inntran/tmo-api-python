@@ -79,19 +79,58 @@ for pool in pools:
 
 ### get_pool_partners()
 
-Get partners associated with a pool.
+Get comprehensive financial and contact information for all partners associated with a specific pool. This includes capital activity, performance metrics, and contact details.
 
 **Parameters:**
 - `account` (str, required): The pool account identifier
 
-**Returns:** `list` of partner data
+**Returns:** `list` of partner dictionaries (CPartners:#TmoAPI)
+
+**Response Fields:**
+Each partner dictionary contains:
+
+**Financial Information:**
+- **BegCapital:** Beginning capital balance
+- **Contributions:** Capital contributions made by the partner
+- **Distributions:** Distributions paid out to the partner
+- **EndCapital:** Ending capital balance for the partner
+- **Income:** Income earned
+- **Withdrawals:** Withdrawal amounts
+- **WithdrawalsAndDisbursements:** Total withdrawals and disbursements
+- **IRR:** Internal Rate of Return
+
+**Contact Information:**
+- **Account:** Partner account identifier
+- **SortName:** Partner's name
+- **Address:** Street, City, State, ZipCode
+- **Phone:** PhoneHome, PhoneWork, PhoneCell, PhoneFax
+- **EmailAddress:** Partner's email
+- **TIN:** Tax Identification Number
+
+**Other:**
+- **AccountType:** Type of account
+- **ERISA:** ERISA flag
+- **IsACH:** ACH flag
+- **RecID:** Unique record identifier
+
+**Note:** This endpoint combines both financial transaction data and contact information. For contact/profile information only (without financial data), use `partners.get_partner()`.
 
 **Example:**
 ```python
-partners = client.shares_pools.get_pool_partners("POOL001")
+partners = client.shares_pools.get_pool_partners("LENDER-C")
 
 for partner in partners:
-    print(f"Partner: {partner.get('Name')}")
+    print(f"\nPartner: {partner.get('SortName')} ({partner.get('Account')})")
+    print(f"  Email: {partner.get('EmailAddress')}")
+    print(f"  Phone: {partner.get('PhoneHome')}")
+
+    # Financial information
+    print(f"  Beginning Capital: ${partner.get('BegCapital', 0):,.2f}")
+    print(f"  Contributions: ${float(partner.get('Contributions', 0)):,.2f}")
+    print(f"  Distributions: ${float(partner.get('Distributions', 0)):,.2f}")
+    print(f"  Ending Capital: ${float(partner.get('EndCapital', 0)):,.2f}")
+    print(f"  Income: ${float(partner.get('Income', 0)):,.2f}")
+    print(f"  IRR: {partner.get('IRR', 0)}%")
 ```
 
 ### get_pool_loans()
