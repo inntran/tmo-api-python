@@ -4,7 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.2] - 2025-11-12
+### Added
+
+- Add inline documentations to partner and history endpoints.
+- Add returned data structures to documentations
+
+### Changed
+- Refactor documentation deployment steps to remove unnecessary push flags
+
 ## [0.1.1] - 2025-11-11
+### Fixed
+
+- Fix tmoapi loading postman collection path issue
 
 ## [0.1.0] - 2025-11-10
 ### Added
@@ -45,6 +57,7 @@ All notable changes to this project will be documented in this file.
 - Contributing: Development Setup, Testing, Code Style
 - Changelog
 
+[0.1.2]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.2
 [0.1.1]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.1
 [0.1.0]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.0
 [0.0.1]: https://github.com/inntran/tmo-api-python/releases/tag/v0.0.1
