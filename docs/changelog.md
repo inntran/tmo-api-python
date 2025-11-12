@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.1] - 2025-11-11
+
 ## [0.1.0] - 2025-11-10
 ### Added
 
@@ -43,5 +45,6 @@ All notable changes to this project will be documented in this file.
 - Contributing: Development Setup, Testing, Code Style
 - Changelog
 
+[0.1.1]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.1
 [0.1.0]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.0
 [0.0.1]: https://github.com/inntran/tmo-api-python/releases/tag/v0.0.1
