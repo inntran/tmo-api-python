@@ -56,11 +56,41 @@ class PoolsResource:
     def get_pool_partners(self, account: str) -> list:
         """Get pool partners by account.
 
+        Returns comprehensive financial and contact information for all partners
+        associated with a specific pool, including capital activity and performance metrics.
+
         Args:
             account: The pool account identifier
 
         Returns:
-            List of pool partners
+            List of partner dictionaries (CPartners:#TmoAPI), each containing:
+
+            Financial Information:
+            - BegCapital: Beginning capital balance
+            - Contributions: Capital contributions made by the partner
+            - Distributions: Distributions paid out to the partner
+            - EndCapital: Ending capital balance for the partner
+            - Income: Income earned
+            - Withdrawals: Withdrawal amounts
+            - WithdrawalsAndDisbursements: Total withdrawals and disbursements
+            - IRR: Internal Rate of Return
+
+            Contact Information:
+            - Account: Partner account identifier
+            - SortName: Partner's name
+            - Address: Street, City, State, ZipCode
+            - Phone: PhoneHome, PhoneWork, PhoneCell, PhoneFax
+            - EmailAddress: Partner's email
+            - TIN: Tax Identification Number
+
+            Other:
+            - AccountType: Type of account
+            - ERISA: ERISA flag
+            - IsACH: ACH flag
+            - RecID: Unique record identifier
+
+            Note: This combines both financial data and contact information, unlike
+            partners.get_partner() which only has contact/profile info without transactions.
 
         Raises:
             APIError: If the API returns an error

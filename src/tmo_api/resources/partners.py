@@ -25,11 +25,23 @@ class PartnersResource:
     def get_partner(self, account: str) -> Dict[str, Any]:
         """Get partner details by Account.
 
+        Returns a single partner with complete profile information including contact details,
+        ACH banking information, custom fields, and trustee information.
+
         Args:
             account: The partner account identifier
 
         Returns:
-            Partner data dictionary
+            Partner data dictionary (CPartner:#TmoAPI) containing:
+            - Contact information: Name, address, phone, email
+            - ACH details: Bank account, routing number, ACH settings
+            - CustomFields: Account-specific custom field values
+            - Trustee info: TrusteeRecID, TrusteeAccountRef, TrusteeAccountType
+            - Tax info: TIN, TINType
+            - Delivery options, statement preferences, and other settings
+
+            Note: Does NOT include financial transactions (Contributions/Distributions).
+            Use pools.get_pool_partners() for financial data.
 
         Raises:
             APIError: If the API returns an error
@@ -71,12 +83,25 @@ class PartnersResource:
     ) -> List[Any]:
         """List all partners with optional date filtering.
 
+        Returns a list of partners with profile information. Date range filters
+        partners based on DateCreated and LastChanged timestamps.
+
         Args:
             start_date: Start date for filtering (MM/DD/YYYY format)
             end_date: End date for filtering (MM/DD/YYYY format)
 
         Returns:
-            List of partners
+            List of partner dictionaries (CPSSPartners:#TmoAPI), each containing:
+            - Account: Partner account identifier
+            - Contact info: FirstName, LastName, MI, SortName, Address (Street, City, State, ZipCode)
+            - Phone: PhoneHome, PhoneWork, PhoneCell, PhoneFax, PhoneMain
+            - Email: EmailAddress
+            - CustomFields: Account-specific custom field values (e.g., Account Type, Interest Rate, Principal Amount)
+            - Trustee info: TrusteeName, TrusteeAccount, TrusteeAccountRef, TrusteeAccountType
+            - Tax info: TIN
+            - Flags: ERISA, IsACH, UsePayee
+            - Timestamps: DateCreated, LastChanged
+            - RecID: Unique record identifier
 
         Raises:
             APIError: If the API returns an error
