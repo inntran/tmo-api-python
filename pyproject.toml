@@ -73,8 +73,8 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/tmo_api"]
 
-[tool.hatch.build.targets.wheel.shared-data]
-"assets" = "assets"
+[tool.hatch.build.targets.wheel.force-include]
+"assets" = "tmo_api/assets"
 
 [tool.black]
 line-length = 100

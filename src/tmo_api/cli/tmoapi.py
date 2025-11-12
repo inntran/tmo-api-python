@@ -38,8 +38,10 @@ def get_package_assets_dir() -> Path:  # pragma: no cover
         Path to the assets/postman_collection directory in the installed package
     """
     # Get the package installation directory
+    # __file__ is .../tmo_api/cli/tmoapi.py
+    # parent.parent is .../tmo_api/
     package_dir = Path(__file__).parent.parent
-    assets_dir = package_dir.parent.parent / "assets" / "postman_collection"
+    assets_dir = package_dir / "assets" / "postman_collection"
     return assets_dir
 
 
