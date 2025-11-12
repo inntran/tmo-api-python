@@ -1737,15 +1737,49 @@
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pool</span><span class="o">.</span><span class="n">Account</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">pool</span><span class="o">.</span><span class="n">Name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div></p>
 <h3 id="get_pool_partners">get_pool_partners()<a class="headerlink" href="#get_pool_partners" title="Permanent link">&para;</a></h3>
-<p>Get partners associated with a pool.</p>
+<p>Get comprehensive financial and contact information for all partners associated with a specific pool. This includes capital activity, performance metrics, and contact details.</p>
 <p><strong>Parameters:</strong>
 - <code>account</code> (str, required): The pool account identifier</p>
-<p><strong>Returns:</strong> <code>list</code> of partner data</p>
+<p><strong>Returns:</strong> <code>list</code> of partner dictionaries (CPartners:#TmoAPI)</p>
+<p><strong>Response Fields:</strong>
+Each partner dictionary contains:</p>
+<p><strong>Financial Information:</strong>
+- <strong>BegCapital:</strong> Beginning capital balance
+- <strong>Contributions:</strong> Capital contributions made by the partner
+- <strong>Distributions:</strong> Distributions paid out to the partner
+- <strong>EndCapital:</strong> Ending capital balance for the partner
+- <strong>Income:</strong> Income earned
+- <strong>Withdrawals:</strong> Withdrawal amounts
+- <strong>WithdrawalsAndDisbursements:</strong> Total withdrawals and disbursements
+- <strong>IRR:</strong> Internal Rate of Return</p>
+<p><strong>Contact Information:</strong>
+- <strong>Account:</strong> Partner account identifier
+- <strong>SortName:</strong> Partner's name
+- <strong>Address:</strong> Street, City, State, ZipCode
+- <strong>Phone:</strong> PhoneHome, PhoneWork, PhoneCell, PhoneFax
+- <strong>EmailAddress:</strong> Partner's email
+- <strong>TIN:</strong> Tax Identification Number</p>
+<p><strong>Other:</strong>
+- <strong>AccountType:</strong> Type of account
+- <strong>ERISA:</strong> ERISA flag
+- <strong>IsACH:</strong> ACH flag
+- <strong>RecID:</strong> Unique record identifier</p>
+<p><strong>Note:</strong> This endpoint combines both financial transaction data and contact information. For contact/profile information only (without financial data), use <code>partners.get_partner()</code>.</p>
 <p><strong>Example:</strong>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">partners</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_pools</span><span class="o">.</span><span class="n">get_pool_partners</span><span class="p">(</span><span class="s2">&quot;POOL001&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">partners</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_pools</span><span class="o">.</span><span class="n">get_pool_partners</span><span class="p">(</span><span class="s2">&quot;LENDER-C&quot;</span><span class="p">)</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">for</span> <span class="n">partner</span> <span class="ow">in</span> <span class="n">partners</span><span class="p">:</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Partner: </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Partner: </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SortName&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Account&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Email: </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;EmailAddress&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Phone: </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PhoneHome&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="c1"># Financial information</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Beginning Capital: $</span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;BegCapital&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Contributions: $</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Contributions&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Distributions: $</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Distributions&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Ending Capital: $</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;EndCapital&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Income: $</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Income&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  IRR: </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;IRR&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 </span></code></pre></div></p>
 <h3 id="get_pool_loans">get_pool_loans()<a class="headerlink" href="#get_pool_loans" title="Permanent link">&para;</a></h3>
 <p>Get loans associated with a pool.</p>
