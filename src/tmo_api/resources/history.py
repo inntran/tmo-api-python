@@ -31,6 +31,9 @@ class HistoryResource:
     ) -> List[Any]:
         """Get share transaction history with optional filtering.
 
+        Returns detailed transaction records for share activities including contributions,
+        withdrawals, distributions, and certificate redemptions.
+
         Args:
             start_date: Start date for filtering (MM/DD/YYYY format)
             end_date: End date for filtering (MM/DD/YYYY format)
@@ -38,7 +41,49 @@ class HistoryResource:
             pool_account: Pool account filter
 
         Returns:
-            List of share transaction history records
+            List of transaction dictionaries (CTransaction:#TmoAPI.Pss), each containing:
+
+            Transaction Details:
+            - Code: Transaction type (e.g., "PartnerWithdrawal", "Contribution", "Distribution")
+            - Amount: Transaction amount (negative for withdrawals)
+            - Shares: Number of shares involved (negative for redemptions)
+            - SharesBalance: Remaining share balance after transaction
+            - SharePrice: Price per share
+            - ShareCost: Cost basis per share
+            - Description: Transaction description
+
+            Dates and Tracking:
+            - DateReceived: When transaction was received
+            - DateDeposited: When funds were deposited
+            - DateCreated: When record was created
+            - LastChanged: Last modification timestamp
+            - CreatedBy: User who created the transaction
+
+            Partner and Pool References:
+            - PartnerAccount: Partner's account number
+            - PartnerRecId: Partner's record ID
+            - PoolAccount: Pool's account number
+            - PoolRecId: Pool's record ID
+
+            Payment Information:
+            - PayAccount: Payee account number
+            - PayName: Payee name
+            - PayAddress: Payee address
+
+            Certificate and ACH:
+            - Certificate: Certificate number
+            - ACH_BatchNumber: ACH batch number
+            - ACH_TraceNumber: ACH trace number
+            - ACH_TransNumber: ACH transaction number
+
+            Other:
+            - Withholding: Tax withholding amount
+            - Penalty: Penalty amount
+            - Drip: DRIP (Dividend Reinvestment Plan) flag
+            - Reference: Reference information
+            - Notes: Additional notes
+            - TrustFundAccountRecId: Trust fund account reference
+            - RecId: Unique transaction record ID
 
         Raises:
             APIError: If the API returns an error

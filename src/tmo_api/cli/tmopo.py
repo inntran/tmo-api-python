@@ -97,6 +97,12 @@ def execute_shares_action(client, args) -> Any:
     elif action == "pools-get":  # pragma: no cover - exercised via integration tests
         return pools_resource.get_pool(args.pool)
     elif action == "pools-partners":  # pragma: no cover - exercised via integration tests
+        # Returns: List of partners with complete financial and contact information
+        # Financial: BegCapital, Contributions, Distributions, EndCapital, Income, Withdrawals,
+        #            WithdrawalsAndDisbursements, IRR (Internal Rate of Return)
+        # Contact: Account, SortName, Address, Phone, Email, TIN
+        # Flags: ERISA, IsACH, AccountType
+        # Object type: CPartners:#TmoAPI
         return pools_resource.get_pool_partners(args.pool)
     elif action == "pools-loans":  # pragma: no cover - exercised via integration tests
         return pools_resource.get_pool_loans(args.pool)
@@ -107,8 +113,17 @@ def execute_shares_action(client, args) -> Any:
 
     # Partners operations
     elif action == "partners":
+        # Requires: Date range (start_date, end_date) for filtering by DateCreated/LastChanged
+        # Returns: List of partners with contact info, CustomFields, trustee info (TrusteeName, TrusteeAccountRef)
+        # Contains: Account, Name, Address, Phone, Email, TIN, ERISA flag, IsACH flag, DateCreated, LastChanged
+        # Object type: CPSSPartners:#TmoAPI
         return partners_resource.list_all(args.start_date, args.end_date)
     elif action == "partners-get":  # pragma: no cover - exercised via integration tests
+        # Returns: Single exact matching partner entry
+        # Contains: Contact info (name, address, phone, email), ACH details, CustomFields,
+        #           trustee info (TrusteeRecID, TrusteeAccountRef), tax info (TIN), delivery options
+        # Does NOT include: Financial transactions like Contributions/Distributions (use pools-partners for that)
+        # Object type: CPartner:#TmoAPI
         return partners_resource.get_partner(args.partner)
     elif action == "partners-attachments":  # pragma: no cover - exercised via integration tests
         return partners_resource.get_partner_attachments(args.partner)
@@ -127,6 +142,12 @@ def execute_shares_action(client, args) -> Any:
 
     # History operations
     elif action == "history":
+        # Returns: List of share transaction history records
+        # Contains: Transaction details (Amount, Shares, SharesBalance), dates (DateReceived, DateDeposited),
+        #           partner/pool info (PartnerAccount, PartnerRecId, PoolAccount, PoolRecId),
+        #           payment details (PayAccount, PayName, PayAddress), certificate info,
+        #           ACH details, withholding, penalties, IRR
+        # Object type: CTransaction:#TmoAPI.Pss
         return history_resource.get_history(args.start_date, args.end_date, args.partner, args.pool)
 
     else:
