@@ -31,18 +31,27 @@ METHOD_COLORS = {
 }
 
 
-def get_package_assets_dir() -> Path:  # pragma: no cover
-    """Get the assets directory from the installed package.
+def find_assets_dir() -> Path:  # pragma: no cover
+    """Find the assets/postman_collection directory.
+
+    Checks in order:
+    1. Project root's assets directory (for development) - looks for pyproject.toml
+    2. Installed package's assets directory (for production)
 
     Returns:
-        Path to the assets/postman_collection directory in the installed package
+        Path to the assets/postman_collection directory (may not exist yet)
     """
-    # Get the package installation directory
+    # First, try to find project root by looking for pyproject.toml (development mode)
+    current = Path.cwd()
+    for parent in [current] + list(current.parents):
+        if (parent / "pyproject.toml").exists():
+            return parent / "assets" / "postman_collection"
+
+    # Fall back to package installation directory (production mode)
     # __file__ is .../tmo_api/cli/tmoapi.py
     # parent.parent is .../tmo_api/
     package_dir = Path(__file__).parent.parent
-    assets_dir = package_dir / "assets" / "postman_collection"
-    return assets_dir
+    return package_dir / "assets" / "postman_collection"
 
 
 def find_api_spec(api_spec: Optional[str]) -> Path:  # pragma: no cover
@@ -60,8 +69,8 @@ def find_api_spec(api_spec: Optional[str]) -> Path:  # pragma: no cover
     if api_spec:
         doc_path = Path(api_spec)
     else:
-        # First, look in the package's assets directory (for end users)
-        assets_dir = get_package_assets_dir()
+        # Check the assets directory (works for both development and production)
+        assets_dir = find_assets_dir()
         if assets_dir.exists():
             candidates = sorted(assets_dir.glob("tmo_api_collection_*.json"), reverse=True)
             if candidates:
@@ -69,7 +78,7 @@ def find_api_spec(api_spec: Optional[str]) -> Path:  # pragma: no cover
                 if doc_path.exists():
                     return doc_path
 
-        # Fall back to current directory (for development)
+        # Fall back to current directory
         candidates = sorted(Path(".").glob("tmo_api_collection_*.json"), reverse=True)
         if candidates:
             doc_path = candidates[0]
@@ -280,21 +289,9 @@ def get_assets_output_path(filename: str) -> Path:  # pragma: no cover
     Returns:
         Path to save the file in assets/postman_collection
     """
-    # Find the project root by looking for pyproject.toml
-    current = Path.cwd()
-    project_root = None
-    for parent in [current] + list(current.parents):
-        if (parent / "pyproject.toml").exists():
-            project_root = parent
-            break
-
-    if project_root:
-        assets_dir = project_root / "assets" / "postman_collection"
-        assets_dir.mkdir(parents=True, exist_ok=True)
-        return assets_dir / filename
-    else:
-        # Fallback to current directory
-        return Path(filename)
+    assets_dir = find_assets_dir()
+    assets_dir.mkdir(parents=True, exist_ok=True)
+    return assets_dir / filename
 
 
 def get_filename_from_data(data: Dict[str, Any]) -> str:
