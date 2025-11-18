@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.3] - 2025-11-18
+### Added
+
+- Add updated TMO API spec 20251117.
+
+### Changed
+- Updated to Python 3.14 for development
+
+### Fixed
+
+- Fixed path processing issue in tmoapi download.
+
 ## [0.1.2] - 2025-11-12
 ### Added
 
@@ -57,6 +69,7 @@ All notable changes to this project will be documented in this file.
 - Contributing: Development Setup, Testing, Code Style
 - Changelog
 
+[0.1.3]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.3
 [0.1.2]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.2
 [0.1.1]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.1
 [0.1.0]: https://github.com/inntran/tmo-api-python/releases/tag/v0.1.0
