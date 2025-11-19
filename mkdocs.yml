@@ -85,6 +85,7 @@ nav:
     - Distributions: user-guide/distributions.md
     - Certificates: user-guide/certificates.md
     - History: user-guide/history.md
+    - Endpoint Comparison: user-guide/endpoint-comparison.md
   - API Reference:
     - Client: api-reference/client.md
     - Models: api-reference/models.md
