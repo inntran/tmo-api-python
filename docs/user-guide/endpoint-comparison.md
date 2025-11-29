@@ -201,6 +201,7 @@ The `history.get_history()` endpoint serves a different purpose - it provides tr
 - Combine any/all filters
 
 **Key Data Returned:**
+
 - **Transaction Details:** Code (type), Amount, Shares, SharesBalance, SharePrice, Description
 - **Dates:** DateReceived, DateDeposited, DateCreated, LastChanged
 - **References:** PartnerAccount, PartnerRecId, PoolAccount, PoolRecId

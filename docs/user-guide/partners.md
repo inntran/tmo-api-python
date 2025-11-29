@@ -34,6 +34,7 @@ Get detailed information about a specific partner. Returns complete profile info
 **Returns:** `Dict[str, Any]` - Partner data dictionary (CPartner:#TmoAPI)
 
 **Response Fields:**
+
 - **Contact Information:** FirstName, LastName, MI, FullName, Salutation, EmailAddress
 - **Address:** Street, City, State, ZipCode, HomeStreet, HomeCity, HomeState, HomeZipCode
 - **Phone Numbers:** PhoneHome, PhoneWork, PhoneCell, PhoneFax, PhoneMain
@@ -103,6 +104,7 @@ List all partners with optional date filtering. Date range filters partners base
 
 **Response Fields:**
 Each partner dictionary contains:
+
 - **Account:** Partner account identifier
 - **Contact Info:** FirstName, LastName, MI, SortName, EmailAddress
 - **Address:** Street, City, State, ZipCode

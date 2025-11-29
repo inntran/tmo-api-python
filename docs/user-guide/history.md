@@ -40,6 +40,7 @@ Get share transaction history with optional filtering. Returns detailed transact
 Each transaction dictionary contains:
 
 **Transaction Details:**
+
 - **Code:** Transaction type (e.g., "PartnerWithdrawal", "Contribution", "Distribution")
 - **Amount:** Transaction amount (negative for withdrawals)
 - **Shares:** Number of shares involved (negative for redemptions)
@@ -49,6 +50,7 @@ Each transaction dictionary contains:
 - **Description:** Transaction description
 
 **Dates and Tracking:**
+
 - **DateReceived:** When transaction was received
 - **DateDeposited:** When funds were deposited
 - **DateCreated:** When record was created
@@ -56,23 +58,27 @@ Each transaction dictionary contains:
 - **CreatedBy:** User who created the transaction
 
 **Partner and Pool References:**
+
 - **PartnerAccount:** Partner's account number
 - **PartnerRecId:** Partner's record ID
 - **PoolAccount:** Pool's account number
 - **PoolRecId:** Pool's record ID
 
 **Payment Information:**
+
 - **PayAccount:** Payee account number
 - **PayName:** Payee name
 - **PayAddress:** Payee address
 
 **Certificate and ACH:**
+
 - **Certificate:** Certificate number
 - **ACH_BatchNumber:** ACH batch number
 - **ACH_TraceNumber:** ACH trace number
 - **ACH_TransNumber:** ACH transaction number
 
 **Other:**
+
 - **Withholding:** Tax withholding amount
 - **Penalty:** Penalty amount
 - **Drip:** DRIP (Dividend Reinvestment Plan) flag

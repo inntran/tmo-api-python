@@ -90,6 +90,7 @@ Get comprehensive financial and contact information for all partners associated 
 Each partner dictionary contains:
 
 **Financial Information:**
+
 - **BegCapital:** Beginning capital balance
 - **Contributions:** Capital contributions made by the partner
 - **Distributions:** Distributions paid out to the partner
@@ -100,6 +101,7 @@ Each partner dictionary contains:
 - **IRR:** Internal Rate of Return
 
 **Contact Information:**
+
 - **Account:** Partner account identifier
 - **SortName:** Partner's name
 - **Address:** Street, City, State, ZipCode
@@ -108,6 +110,7 @@ Each partner dictionary contains:
 - **TIN:** Tax Identification Number
 
 **Other:**
+
 - **AccountType:** Type of account
 - **ERISA:** ERISA flag
 - **IsACH:** ACH flag
