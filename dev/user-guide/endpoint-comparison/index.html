@@ -1941,13 +1941,15 @@
 - Partner account
 - Pool account
 - Combine any/all filters</p>
-<p><strong>Key Data Returned:</strong>
-- <strong>Transaction Details:</strong> Code (type), Amount, Shares, SharesBalance, SharePrice, Description
-- <strong>Dates:</strong> DateReceived, DateDeposited, DateCreated, LastChanged
-- <strong>References:</strong> PartnerAccount, PartnerRecId, PoolAccount, PoolRecId
-- <strong>Payment Info:</strong> PayAccount, PayName, PayAddress
-- <strong>Certificate &amp; ACH:</strong> Certificate number, ACH batch/trace/transaction numbers
-- <strong>Other:</strong> Withholding, Penalty, Drip flag, CreatedBy, Notes</p>
+<p><strong>Key Data Returned:</strong></p>
+<ul>
+<li><strong>Transaction Details:</strong> Code (type), Amount, Shares, SharesBalance, SharePrice, Description</li>
+<li><strong>Dates:</strong> DateReceived, DateDeposited, DateCreated, LastChanged</li>
+<li><strong>References:</strong> PartnerAccount, PartnerRecId, PoolAccount, PoolRecId</li>
+<li><strong>Payment Info:</strong> PayAccount, PayName, PayAddress</li>
+<li><strong>Certificate &amp; ACH:</strong> Certificate number, ACH batch/trace/transaction numbers</li>
+<li><strong>Other:</strong> Withholding, Penalty, Drip flag, CreatedBy, Notes</li>
+</ul>
 <p><strong>Example:</strong>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Get transaction history for a partner in a specific period</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">history</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_history</span><span class="o">.</span><span class="n">get_history</span><span class="p">(</span>
