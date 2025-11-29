@@ -1,6 +1,6 @@
 [project]
 name = "tmo-api"
-version = "0.1.3"
+version = "0.1.4"
 description = "Wrapper for The Mortgage Office API"
 readme = "README.md"
 license = { text = "Apache-2.0" }
