@@ -1072,6 +1072,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoint-comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Endpoint Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1743,27 +1771,33 @@
 <p><strong>Returns:</strong> <code>list</code> of partner dictionaries (CPartners:#TmoAPI)</p>
 <p><strong>Response Fields:</strong>
 Each partner dictionary contains:</p>
-<p><strong>Financial Information:</strong>
-- <strong>BegCapital:</strong> Beginning capital balance
-- <strong>Contributions:</strong> Capital contributions made by the partner
-- <strong>Distributions:</strong> Distributions paid out to the partner
-- <strong>EndCapital:</strong> Ending capital balance for the partner
-- <strong>Income:</strong> Income earned
-- <strong>Withdrawals:</strong> Withdrawal amounts
-- <strong>WithdrawalsAndDisbursements:</strong> Total withdrawals and disbursements
-- <strong>IRR:</strong> Internal Rate of Return</p>
-<p><strong>Contact Information:</strong>
-- <strong>Account:</strong> Partner account identifier
-- <strong>SortName:</strong> Partner's name
-- <strong>Address:</strong> Street, City, State, ZipCode
-- <strong>Phone:</strong> PhoneHome, PhoneWork, PhoneCell, PhoneFax
-- <strong>EmailAddress:</strong> Partner's email
-- <strong>TIN:</strong> Tax Identification Number</p>
-<p><strong>Other:</strong>
-- <strong>AccountType:</strong> Type of account
-- <strong>ERISA:</strong> ERISA flag
-- <strong>IsACH:</strong> ACH flag
-- <strong>RecID:</strong> Unique record identifier</p>
+<p><strong>Financial Information:</strong></p>
+<ul>
+<li><strong>BegCapital:</strong> Beginning capital balance</li>
+<li><strong>Contributions:</strong> Capital contributions made by the partner</li>
+<li><strong>Distributions:</strong> Distributions paid out to the partner</li>
+<li><strong>EndCapital:</strong> Ending capital balance for the partner</li>
+<li><strong>Income:</strong> Income earned</li>
+<li><strong>Withdrawals:</strong> Withdrawal amounts</li>
+<li><strong>WithdrawalsAndDisbursements:</strong> Total withdrawals and disbursements</li>
+<li><strong>IRR:</strong> Internal Rate of Return</li>
+</ul>
+<p><strong>Contact Information:</strong></p>
+<ul>
+<li><strong>Account:</strong> Partner account identifier</li>
+<li><strong>SortName:</strong> Partner's name</li>
+<li><strong>Address:</strong> Street, City, State, ZipCode</li>
+<li><strong>Phone:</strong> PhoneHome, PhoneWork, PhoneCell, PhoneFax</li>
+<li><strong>EmailAddress:</strong> Partner's email</li>
+<li><strong>TIN:</strong> Tax Identification Number</li>
+</ul>
+<p><strong>Other:</strong></p>
+<ul>
+<li><strong>AccountType:</strong> Type of account</li>
+<li><strong>ERISA:</strong> ERISA flag</li>
+<li><strong>IsACH:</strong> ACH flag</li>
+<li><strong>RecID:</strong> Unique record identifier</li>
+</ul>
 <p><strong>Note:</strong> This endpoint combines both financial transaction data and contact information. For contact/profile information only (without financial data), use <code>partners.get_partner()</code>.</p>
 <p><strong>Example:</strong>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">partners</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_pools</span><span class="o">.</span><span class="n">get_pool_partners</span><span class="p">(</span><span class="s2">&quot;LENDER-C&quot;</span><span class="p">)</span>

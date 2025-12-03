@@ -923,6 +923,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoint-comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Endpoint Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1406,20 +1434,22 @@
 <p><strong>Parameters:</strong>
 - <code>account</code> (str, required): The partner account identifier</p>
 <p><strong>Returns:</strong> <code>Dict[str, Any]</code> - Partner data dictionary (CPartner:#TmoAPI)</p>
-<p><strong>Response Fields:</strong>
-- <strong>Contact Information:</strong> FirstName, LastName, MI, FullName, Salutation, EmailAddress
-- <strong>Address:</strong> Street, City, State, ZipCode, HomeStreet, HomeCity, HomeState, HomeZipCode
-- <strong>Phone Numbers:</strong> PhoneHome, PhoneWork, PhoneCell, PhoneFax, PhoneMain
-- <strong>ACH Details:</strong> ACH_AccountNumber, ACH_RoutingNumber, ACH_BankName, ACH_BankAddress, ACH_AccountType, ACH_SecCode, ACH_IndividualId, ACH_IndividualName, ACH_ServiceStatus, ACH_SendDepositNotificationFlag
-- <strong>Custom Fields:</strong> Array of custom field objects with Name, Tab, and Value properties
-- <strong>Trustee Information:</strong> TrusteeRecID, TrusteeAccountRef, TrusteeAccountType
-- <strong>Tax Information:</strong> TIN, TINType
-- <strong>Settings:</strong> DeliveryOptions, PrintStatementFor, EmailFormat, Categories, Notes, UsePayee, Payee
-- <strong>Registered Shareholder:</strong> RegisteredShareholderName, RegisteredShareholderStreet, RegisteredShareholderCity, RegisteredShareholderState, RegisteredShareholderZipCode
-- <strong>Flags:</strong> ERISA, NonResident, HomeAddrEnabled
-- <strong>Other:</strong> AccountType, BirthDay, SecurityHeldBy, WPC_PIN, WPC_Publish, GrowthPct
-- <strong>Holdback:</strong> Holdback_Use, Holdback_Pct, Holdback_Ref, Holdback_RecID
-- <strong>System Fields:</strong> RecID, SysCreatedDate, SysTimeStamp</p>
+<p><strong>Response Fields:</strong></p>
+<ul>
+<li><strong>Contact Information:</strong> FirstName, LastName, MI, FullName, Salutation, EmailAddress</li>
+<li><strong>Address:</strong> Street, City, State, ZipCode, HomeStreet, HomeCity, HomeState, HomeZipCode</li>
+<li><strong>Phone Numbers:</strong> PhoneHome, PhoneWork, PhoneCell, PhoneFax, PhoneMain</li>
+<li><strong>ACH Details:</strong> ACH_AccountNumber, ACH_RoutingNumber, ACH_BankName, ACH_BankAddress, ACH_AccountType, ACH_SecCode, ACH_IndividualId, ACH_IndividualName, ACH_ServiceStatus, ACH_SendDepositNotificationFlag</li>
+<li><strong>Custom Fields:</strong> Array of custom field objects with Name, Tab, and Value properties</li>
+<li><strong>Trustee Information:</strong> TrusteeRecID, TrusteeAccountRef, TrusteeAccountType</li>
+<li><strong>Tax Information:</strong> TIN, TINType</li>
+<li><strong>Settings:</strong> DeliveryOptions, PrintStatementFor, EmailFormat, Categories, Notes, UsePayee, Payee</li>
+<li><strong>Registered Shareholder:</strong> RegisteredShareholderName, RegisteredShareholderStreet, RegisteredShareholderCity, RegisteredShareholderState, RegisteredShareholderZipCode</li>
+<li><strong>Flags:</strong> ERISA, NonResident, HomeAddrEnabled</li>
+<li><strong>Other:</strong> AccountType, BirthDay, SecurityHeldBy, WPC_PIN, WPC_Publish, GrowthPct</li>
+<li><strong>Holdback:</strong> Holdback_Use, Holdback_Pct, Holdback_Ref, Holdback_RecID</li>
+<li><strong>System Fields:</strong> RecID, SysCreatedDate, SysTimeStamp</li>
+</ul>
 <p><strong>Note:</strong> This endpoint returns profile and contact information but does NOT include financial transaction data (contributions, distributions, capital balances). For financial data, use <code>pools.get_pool_partners()</code>.</p>
 <p><strong>Example:</strong>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">partner</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_partners</span><span class="o">.</span><span class="n">get_partner</span><span class="p">(</span><span class="s2">&quot;P001002&quot;</span><span class="p">)</span>
@@ -1461,17 +1491,19 @@
 - <code>end_date</code> (str, optional): End date in MM/DD/YYYY format</p>
 <p><strong>Returns:</strong> <code>List[Any]</code> - List of partner data dictionaries (CPSSPartners:#TmoAPI)</p>
 <p><strong>Response Fields:</strong>
-Each partner dictionary contains:
-- <strong>Account:</strong> Partner account identifier
-- <strong>Contact Info:</strong> FirstName, LastName, MI, SortName, EmailAddress
-- <strong>Address:</strong> Street, City, State, ZipCode
-- <strong>Phone Numbers:</strong> PhoneHome, PhoneWork, PhoneCell, PhoneFax, PhoneMain
-- <strong>Custom Fields:</strong> Array of custom field objects with Name, Tab, and Value properties
-- <strong>Trustee Info:</strong> TrusteeName, TrusteeAccount, TrusteeAccountRef, TrusteeAccountType
-- <strong>Tax Info:</strong> TIN
-- <strong>Flags:</strong> ERISA, IsACH, UsePayee
-- <strong>Timestamps:</strong> DateCreated, LastChanged
-- <strong>Other:</strong> RecID, Payee</p>
+Each partner dictionary contains:</p>
+<ul>
+<li><strong>Account:</strong> Partner account identifier</li>
+<li><strong>Contact Info:</strong> FirstName, LastName, MI, SortName, EmailAddress</li>
+<li><strong>Address:</strong> Street, City, State, ZipCode</li>
+<li><strong>Phone Numbers:</strong> PhoneHome, PhoneWork, PhoneCell, PhoneFax, PhoneMain</li>
+<li><strong>Custom Fields:</strong> Array of custom field objects with Name, Tab, and Value properties</li>
+<li><strong>Trustee Info:</strong> TrusteeName, TrusteeAccount, TrusteeAccountRef, TrusteeAccountType</li>
+<li><strong>Tax Info:</strong> TIN</li>
+<li><strong>Flags:</strong> ERISA, IsACH, UsePayee</li>
+<li><strong>Timestamps:</strong> DateCreated, LastChanged</li>
+<li><strong>Other:</strong> RecID, Payee</li>
+</ul>
 <p><strong>Example:</strong>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># All partners</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">partners</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_partners</span><span class="o">.</span><span class="n">list_all</span><span class="p">()</span>
