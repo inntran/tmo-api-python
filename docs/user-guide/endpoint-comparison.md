@@ -10,7 +10,7 @@ These three endpoints provide different views of partner data. Understanding the
 
 | Feature | `partners.list_all()` | `partners.get_partner()` | `pools.get_pool_partners()` |
 |---------|----------------------|-------------------------|----------------------------|
-| **Object Type** | CPSSPartners:#TmoAPI | CPartner:#TmoAPI | CPartners:#TmoAPI |
+| **Object Type** | CPSSPartners:#TmoAPI | CPartner:#TmoAPI | CPartner<ins>s</ins>:#TmoAPI |
 | **Returns** | List of partners | Single partner | List of partners in pool |
 | **Scope** | All partners | One partner | Partners in specific pool |
 | **Filtering** | Date range | By account | By pool account |
@@ -20,6 +20,7 @@ These three endpoints provide different views of partner data. Understanding the
 | - Address | ✓ | ✓ Full + Home | ✓ |
 | - Phone | ✓ | ✓ All types | ✓ All types |
 | - Email | ✓ | ✓ | ✓ |
+| - Birthday | ✗ | ✓ Exclusive | ✗ |
 | | | | |
 | **Financial Data** | | | |
 | - Beginning Capital | ✗ | ✗ | ✓ |
@@ -31,20 +32,23 @@ These three endpoints provide different views of partner data. Understanding the
 | - IRR | ✗ | ✗ | ✓ |
 | | | | |
 | **Profile Details** | | | |
+| - Categories | ✗ | ✓ Exclusive | ✗ |
 | - Custom Fields | ✓ | ✓ Complete | ✗ |
 | - ACH Details | ✗ | ✓ Complete | ✗ |
 | - Trustee Info | ✓ Basic | ✓ Complete (RecID) | ✗ |
 | - Tax Info (TIN) | ✓ | ✓ + TINType | ✓ |
 | - Settings/Preferences | ✗ | ✓ | ✗ |
+| - Notes | ✗ | ✓ | ✗ |
 | | | | |
 | **Timestamps** | | | |
-| - DateCreated | ✓ | ✓ (SysCreatedDate) | ✗ |
-| - LastChanged | ✓ | ✓ (SysTimeStamp) | ✗ |
+| - DateCreated | ✓(local date & time) | ✓ (SysCreatedDate, date only) | ✗ |
+| - LastChanged | ✓(local date & time) | ✓ (SysTimeStamp, date only) | ✗ |
 | | | | |
 | **Flags** | | | |
 | - ERISA | ✓ | ✓ | ✓ |
 | - IsACH | ✓ | ✗ | ✓ |
 | - AccountType | ✗ | ✓ | ✓ |
+| - NonResident | ✗ | ✓ | ✗ |
 
 ### When to Use Each Endpoint
 
@@ -83,6 +87,7 @@ for partner in partners:
 - Getting ACH banking information for payments
 - Accessing all settings and preferences
 - Partner management tasks
+- Categories for filtering and tagging
 
 **Example:**
 ```python
