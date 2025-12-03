@@ -54,6 +54,7 @@ These three endpoints provide different views of partner data. Understanding the
 
 #### `partners.list_all()` - Partner Directory
 **Best for:**
+
 - Finding partners created or modified within a date range
 - Bulk operations across multiple partners
 - Directory listings with basic contact info
@@ -73,6 +74,7 @@ for partner in partners:
 ```
 
 **Key Characteristics:**
+
 - Returns multiple partners
 - Includes custom fields
 - Filtered by creation/modification date
@@ -83,6 +85,7 @@ for partner in partners:
 
 #### `partners.get_partner()` - Complete Profile
 **Best for:**
+
 - Viewing complete partner profile
 - Getting ACH banking information for payments
 - Accessing all settings and preferences
@@ -107,6 +110,7 @@ for field in partner.get('CustomFields', []):
 ```
 
 **Key Characteristics:**
+
 - Returns single partner
 - Most detailed profile information
 - Complete ACH banking details
@@ -117,6 +121,7 @@ for field in partner.get('CustomFields', []):
 
 #### `pools.get_pool_partners()` - Financial Snapshot
 **Best for:**
+
 - Viewing partner capital balances and activity
 - Financial reporting for a specific pool
 - Calculating returns (IRR) for pool partners
@@ -138,6 +143,7 @@ for partner in partners:
 ```
 
 **Key Characteristics:**
+
 - Returns partners in specific pool
 - Complete financial data (balances, contributions, distributions)
 - Performance metrics (IRR)
@@ -193,6 +199,7 @@ The `history.get_history()` endpoint serves a different purpose - it provides tr
 **Purpose:** Get detailed transaction history showing individual share activities
 
 **Best for:**
+
 - Viewing transaction-level detail
 - Audit trails and compliance reporting
 - Understanding specific share activities over time
@@ -200,6 +207,7 @@ The `history.get_history()` endpoint serves a different purpose - it provides tr
 - ACH transaction tracking and reconciliation
 
 **Filtering Options:**
+
 - Date range (start_date, end_date)
 - Partner account
 - Pool account
