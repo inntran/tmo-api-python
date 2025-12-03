@@ -1607,7 +1607,7 @@
 <td><strong>Object Type</strong></td>
 <td>CPSSPartners:#TmoAPI</td>
 <td>CPartner:#TmoAPI</td>
-<td>CPartners:#TmoAPI</td>
+<td>CPartner<ins>s</ins>:#TmoAPI</td>
 </tr>
 <tr>
 <td><strong>Returns</strong></td>
@@ -1662,6 +1662,12 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
+</tr>
+<tr>
+<td>- Birthday</td>
+<td>✗</td>
+<td>✓ Exclusive</td>
+<td>✗</td>
 </tr>
 <tr>
 <td></td>
@@ -1730,6 +1736,12 @@
 <td></td>
 </tr>
 <tr>
+<td>- Categories</td>
+<td>✗</td>
+<td>✓ Exclusive</td>
+<td>✗</td>
+</tr>
+<tr>
 <td>- Custom Fields</td>
 <td>✓</td>
 <td>✓ Complete</td>
@@ -1760,6 +1772,12 @@
 <td>✗</td>
 </tr>
 <tr>
+<td>- Notes</td>
+<td>✗</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
 <td></td>
 <td></td>
 <td></td>
@@ -1773,14 +1791,14 @@
 </tr>
 <tr>
 <td>- DateCreated</td>
-<td>✓</td>
-<td>✓ (SysCreatedDate)</td>
+<td>✓(local date &amp; time)</td>
+<td>✓ (SysCreatedDate, date only)</td>
 <td>✗</td>
 </tr>
 <tr>
 <td>- LastChanged</td>
-<td>✓</td>
-<td>✓ (SysTimeStamp)</td>
+<td>✓(local date &amp; time)</td>
+<td>✓ (SysTimeStamp, date only)</td>
 <td>✗</td>
 </tr>
 <tr>
@@ -1813,15 +1831,23 @@
 <td>✓</td>
 <td>✓</td>
 </tr>
+<tr>
+<td>- NonResident</td>
+<td>✗</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
 </tbody>
 </table>
 <h3 id="when-to-use-each-endpoint">When to Use Each Endpoint<a class="headerlink" href="#when-to-use-each-endpoint" title="Permanent link">&para;</a></h3>
 <h4 id="partnerslist_all-partner-directory"><code>partners.list_all()</code> - Partner Directory<a class="headerlink" href="#partnerslist_all-partner-directory" title="Permanent link">&para;</a></h4>
-<p><strong>Best for:</strong>
-- Finding partners created or modified within a date range
-- Bulk operations across multiple partners
-- Directory listings with basic contact info
-- Searching for partner accounts</p>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Finding partners created or modified within a date range</li>
+<li>Bulk operations across multiple partners</li>
+<li>Directory listings with basic contact info</li>
+<li>Searching for partner accounts</li>
+</ul>
 <p><strong>Example:</strong>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Find all partners modified in 2024</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">partners</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_partners</span><span class="o">.</span><span class="n">list_all</span><span class="p">(</span>
@@ -1833,19 +1859,24 @@
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Account&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;FirstName&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;LastName&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Created: </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DateCreated&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div></p>
-<p><strong>Key Characteristics:</strong>
-- Returns multiple partners
-- Includes custom fields
-- Filtered by creation/modification date
-- No financial data
-- No ACH details</p>
+<p><strong>Key Characteristics:</strong></p>
+<ul>
+<li>Returns multiple partners</li>
+<li>Includes custom fields</li>
+<li>Filtered by creation/modification date</li>
+<li>No financial data</li>
+<li>No ACH details</li>
+</ul>
 <hr />
 <h4 id="partnersget_partner-complete-profile"><code>partners.get_partner()</code> - Complete Profile<a class="headerlink" href="#partnersget_partner-complete-profile" title="Permanent link">&para;</a></h4>
-<p><strong>Best for:</strong>
-- Viewing complete partner profile
-- Getting ACH banking information for payments
-- Accessing all settings and preferences
-- Partner management tasks</p>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Viewing complete partner profile</li>
+<li>Getting ACH banking information for payments</li>
+<li>Accessing all settings and preferences</li>
+<li>Partner management tasks</li>
+<li>Categories for filtering and tagging</li>
+</ul>
 <p><strong>Example:</strong>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Get complete profile for one partner</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">partner</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_partners</span><span class="o">.</span><span class="n">get_partner</span><span class="p">(</span><span class="s2">&quot;P001002&quot;</span><span class="p">)</span>
@@ -1861,19 +1892,23 @@
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;CustomFields&#39;</span><span class="p">,</span> <span class="p">[]):</span>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">field</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">field</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></code></pre></div></p>
-<p><strong>Key Characteristics:</strong>
-- Returns single partner
-- Most detailed profile information
-- Complete ACH banking details
-- All custom fields and settings
-- No financial transaction data</p>
+<p><strong>Key Characteristics:</strong></p>
+<ul>
+<li>Returns single partner</li>
+<li>Most detailed profile information</li>
+<li>Complete ACH banking details</li>
+<li>All custom fields and settings</li>
+<li>No financial transaction data</li>
+</ul>
 <hr />
 <h4 id="poolsget_pool_partners-financial-snapshot"><code>pools.get_pool_partners()</code> - Financial Snapshot<a class="headerlink" href="#poolsget_pool_partners-financial-snapshot" title="Permanent link">&para;</a></h4>
-<p><strong>Best for:</strong>
-- Viewing partner capital balances and activity
-- Financial reporting for a specific pool
-- Calculating returns (IRR) for pool partners
-- Understanding equity positions</p>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Viewing partner capital balances and activity</li>
+<li>Financial reporting for a specific pool</li>
+<li>Calculating returns (IRR) for pool partners</li>
+<li>Understanding equity positions</li>
+</ul>
 <p><strong>Example:</strong>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Get financial data for all partners in a pool</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">partners</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_pools</span><span class="o">.</span><span class="n">get_pool_partners</span><span class="p">(</span><span class="s2">&quot;LENDER-C&quot;</span><span class="p">)</span>
@@ -1887,12 +1922,14 @@
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Ending Capital: $</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;EndCapital&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  IRR: </span><span class="si">{</span><span class="n">partner</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;IRR&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 </span></code></pre></div></p>
-<p><strong>Key Characteristics:</strong>
-- Returns partners in specific pool
-- Complete financial data (balances, contributions, distributions)
-- Performance metrics (IRR)
-- Basic contact information
-- No ACH details or custom fields</p>
+<p><strong>Key Characteristics:</strong></p>
+<ul>
+<li>Returns partners in specific pool</li>
+<li>Complete financial data (balances, contributions, distributions)</li>
+<li>Performance metrics (IRR)</li>
+<li>Basic contact information</li>
+<li>No ACH details or custom fields</li>
+</ul>
 <hr />
 <h3 id="combining-endpoints-for-complete-view">Combining Endpoints for Complete View<a class="headerlink" href="#combining-endpoints-for-complete-view" title="Permanent link">&para;</a></h3>
 <p>Often you'll need data from multiple endpoints:</p>
@@ -1930,17 +1967,21 @@
 <h3 id="historyget_history-transaction-detail"><code>history.get_history()</code> - Transaction Detail<a class="headerlink" href="#historyget_history-transaction-detail" title="Permanent link">&para;</a></h3>
 <p><strong>Object Type:</strong> CTransaction:#TmoAPI.Pss</p>
 <p><strong>Purpose:</strong> Get detailed transaction history showing individual share activities</p>
-<p><strong>Best for:</strong>
-- Viewing transaction-level detail
-- Audit trails and compliance reporting
-- Understanding specific share activities over time
-- Tracking certificate redemptions and issuances
-- ACH transaction tracking and reconciliation</p>
-<p><strong>Filtering Options:</strong>
-- Date range (start_date, end_date)
-- Partner account
-- Pool account
-- Combine any/all filters</p>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Viewing transaction-level detail</li>
+<li>Audit trails and compliance reporting</li>
+<li>Understanding specific share activities over time</li>
+<li>Tracking certificate redemptions and issuances</li>
+<li>ACH transaction tracking and reconciliation</li>
+</ul>
+<p><strong>Filtering Options:</strong></p>
+<ul>
+<li>Date range (start_date, end_date)</li>
+<li>Partner account</li>
+<li>Pool account</li>
+<li>Combine any/all filters</li>
+</ul>
 <p><strong>Key Data Returned:</strong></p>
 <ul>
 <li><strong>Transaction Details:</strong> Code (type), Amount, Shares, SharesBalance, SharePrice, Description</li>
