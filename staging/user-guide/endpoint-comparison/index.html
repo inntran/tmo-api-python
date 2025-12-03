@@ -1607,7 +1607,7 @@
 <td><strong>Object Type</strong></td>
 <td>CPSSPartners:#TmoAPI</td>
 <td>CPartner:#TmoAPI</td>
-<td>CPartners:#TmoAPI</td>
+<td>CPartner<ins>s</ins>:#TmoAPI</td>
 </tr>
 <tr>
 <td><strong>Returns</strong></td>
@@ -1662,6 +1662,12 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
+</tr>
+<tr>
+<td>- Birthday</td>
+<td>✗</td>
+<td>✓ Exclusive</td>
+<td>✗</td>
 </tr>
 <tr>
 <td></td>
@@ -1730,6 +1736,12 @@
 <td></td>
 </tr>
 <tr>
+<td>- Categories</td>
+<td>✗</td>
+<td>✓ Exclusive</td>
+<td>✗</td>
+</tr>
+<tr>
 <td>- Custom Fields</td>
 <td>✓</td>
 <td>✓ Complete</td>
@@ -1760,6 +1772,12 @@
 <td>✗</td>
 </tr>
 <tr>
+<td>- Notes</td>
+<td>✗</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
 <td></td>
 <td></td>
 <td></td>
@@ -1773,14 +1791,14 @@
 </tr>
 <tr>
 <td>- DateCreated</td>
-<td>✓</td>
-<td>✓ (SysCreatedDate)</td>
+<td>✓(local date &amp; time)</td>
+<td>✓ (SysCreatedDate, date only)</td>
 <td>✗</td>
 </tr>
 <tr>
 <td>- LastChanged</td>
-<td>✓</td>
-<td>✓ (SysTimeStamp)</td>
+<td>✓(local date &amp; time)</td>
+<td>✓ (SysTimeStamp, date only)</td>
 <td>✗</td>
 </tr>
 <tr>
@@ -1812,6 +1830,12 @@
 <td>✗</td>
 <td>✓</td>
 <td>✓</td>
+</tr>
+<tr>
+<td>- NonResident</td>
+<td>✗</td>
+<td>✓</td>
+<td>✗</td>
 </tr>
 </tbody>
 </table>
@@ -1845,7 +1869,8 @@
 - Viewing complete partner profile
 - Getting ACH banking information for payments
 - Accessing all settings and preferences
-- Partner management tasks</p>
+- Partner management tasks
+- Categories for filtering and tagging</p>
 <p><strong>Example:</strong>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Get complete profile for one partner</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">partner</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">shares_partners</span><span class="o">.</span><span class="n">get_partner</span><span class="p">(</span><span class="s2">&quot;P001002&quot;</span><span class="p">)</span>
