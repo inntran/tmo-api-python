@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Add new lines to ensure list are rendered correctly.
+- Add history shares response test
+
+### Changed
+
+- Update December 2025 API specifications
+
 ## [0.1.5] - 2025-12-02
 ### Added
 
