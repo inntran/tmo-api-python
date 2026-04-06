@@ -52,7 +52,7 @@ class HistoryResource:
             - ShareCost: Cost basis per share
             - Description: Transaction description
 
-            Dates and Tracking:
+            Dates and Tracking (MM/DD/YYYY format):
             - DateReceived: When transaction was received
             - DateDeposited: When funds were deposited
             - DateCreated: When record was created
@@ -72,9 +72,18 @@ class HistoryResource:
 
             Certificate and ACH:
             - Certificate: Certificate number
+            - CertificateRecID: Certificate record reference
             - ACH_BatchNumber: ACH batch number
             - ACH_TraceNumber: ACH trace number
             - ACH_TransNumber: ACH transaction number
+
+            Record References:
+            - DistributionRecID: Distribution record reference
+            - ReversalRecID: Reversal record reference
+            - TransferRecID: Transfer record reference
+            - TDSGroupRecID: TDS group record reference
+            - TrustFundAccountRecId: Trust fund account reference
+            - RecId: Unique transaction record ID
 
             Other:
             - Withholding: Tax withholding amount
@@ -82,8 +91,6 @@ class HistoryResource:
             - Drip: DRIP (Dividend Reinvestment Plan) flag
             - Reference: Reference information
             - Notes: Additional notes
-            - TrustFundAccountRecId: Trust fund account reference
-            - RecId: Unique transaction record ID
 
         Raises:
             APIError: If the API returns an error

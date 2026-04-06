@@ -107,6 +107,71 @@ class TestHistoryResource:
         assert isinstance(history, list)
 
     @patch.object(TMOClient, "get")
+    def test_get_history_shares_response_schema(self, mock_get, client):
+        """Test Shares history response includes new fields and excludes removed fields."""
+        shares_transaction = {
+            "__type": "CTransaction:#TmoAPI.Pss",
+            "ACH_BatchNumber": "",
+            "ACH_TraceNumber": "",
+            "ACH_TransNumber": "",
+            "Amount": 8003.48,
+            "Certificate": "",
+            "CertificateRecID": "",
+            "Code": "PartnershipReceipt",
+            "CreatedBy": "Ramiro",
+            "DateCreated": "08/24/2020 11:00:49 AM",
+            "DateDeposited": "07/15/2020",
+            "DateReceived": "07/15/2020",
+            "Description": "Loan Payments-ACH",
+            "DistributionRecID": "",
+            "Drip": False,
+            "LastChanged": "08/24/2020 11:00:49 AM",
+            "Notes": "Payment posted from loan servicing.",
+            "PartnerAccount": "",
+            "PartnerRecId": "",
+            "PayAccount": "",
+            "PayAddress": "2847 Gundry Avenue",
+            "PayName": "World Mortgage Company",
+            "Penalty": 0.0,
+            "PoolAccount": "LENDER-C",
+            "PoolRecId": "dd26c54c785e4eda82065b096c833422",
+            "RecId": "D3E01515B6A946E7A2BD1CB4261DF20E",
+            "Reference": "0000020",
+            "ReversalRecID": "",
+            "ShareCost": 0.0,
+            "SharePrice": 0.0,
+            "Shares": 0.0,
+            "SharesBalance": 4207942.53,
+            "TDSGroupRecID": "",
+            "TransferRecID": "",
+            "TrustFundAccountRecId": "5EB27FB365D84699B8343AD43D7A66B4",
+            "Withholding": 0.0,
+        }
+        mock_get.return_value = {"Status": 0, "Data": [shares_transaction]}
+        resource = HistoryResource(client, PoolType.SHARES)
+
+        history = resource.get_history()
+
+        assert len(history) == 1
+        txn = history[0]
+        assert txn["__type"] == "CTransaction:#TmoAPI.Pss"
+        # Fields added in Dec 2025 spec
+        assert "CertificateRecID" in txn
+        assert "DistributionRecID" in txn
+        assert "PoolAccount" in txn
+        assert "PoolRecId" in txn
+        assert "RecId" in txn
+        assert "ReversalRecID" in txn
+        assert "TDSGroupRecID" in txn
+        assert "TransferRecID" in txn
+        # Fields removed in Dec 2025 spec
+        assert "Date" not in txn
+        assert "LenderHistoryRecId" not in txn
+        # Dates are human-readable strings, not .NET ticks
+        assert not txn["DateCreated"].startswith("/Date(")
+        assert not txn["DateReceived"].startswith("/Date(")
+
+    @patch.object(TMOClient, "get")
     def test_get_history_invalid_start_date(self, mock_get, client):
         """Test get_history with invalid start_date format."""
         resource = HistoryResource(client, PoolType.SHARES)
